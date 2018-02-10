@@ -1,0 +1,23 @@
+@import './src/style/variables';
+#footer {
+	background-color: white;
+	background-color: #fff;
+  padding: 0 20px;
+	box-shadow: 0 0 5px rgba(0,0,0,.05);
+	span {
+		font-size: 12px;
+		margin-left: 40px;
+	}
+	ul {
+		> li {
+			> a {
+				text-transform: none;
+			}
+		}
+	}
+}
+#logo {
+	img {
+		width: 140px;
+	}
+}

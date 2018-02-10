@@ -1,0 +1,6 @@
+.layoutWrapper {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 0px;
+  grid-auto-rows: minmax(20px, auto);
+}

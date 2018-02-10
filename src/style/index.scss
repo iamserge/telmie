@@ -1,0 +1,104 @@
+@import './variables';
+
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0 !important;
+	overflow: visible !important;
+	margin: 0;
+	font-family: 'Roboto', arial, sans-serif;
+	font-weight: 400;
+	color: #323232;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+a {
+	font-family: 'Roboto', arial, sans-serif !important;
+	color: #323232;
+	&:hover {
+		text-decoration: underline !important;
+	}
+}
+#app {
+	height: 100%;
+}
+.uk-modal {
+	opacity: 1;
+	transition: none;
+}
+.uk-modal-full {
+	.uk-modal-dialog {
+		transform: none;
+		transition: none;
+	}
+}
+.uk-modal-dialog {
+	opacity: 1;
+	transform: none;
+	transition: none;
+}
+
+.uk-close {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  width: 60px;
+  height: 60px;
+  display: block;
+	z-index: 5000;
+	&:hover {
+		opacity: 1;
+	}
+	&:before, &:after {
+		position: absolute;
+	  left: 15px;
+	  content: ' ';
+	  height: 60px;
+	  width: 3px;
+	  background-color: #333;
+	}
+	&:before {
+		transform: rotate(45deg);
+	}
+	&:after {
+		transform: rotate(-45deg);
+	}
+}
+
+button {
+	background-color: $red;
+	color: white !important;
+}
+
+.switch {
+  margin-bottom: 5px;
+	> div {
+		background-color: $lightGrey;
+		border: none;
+		&.on {
+			background-color: $lightGrey;
+			> div {
+				left: 27px !important;
+			}
+		}
+		> div {
+			background-color: $red;
+			border: none;
+			box-shadow: none;
+	    width: 19px;
+  		height: 19px;
+  		top: 4px;
+			left: 4px;
+		}
+	}
+	> span {
+		top: 1px;
+		position: relative;
+		vertical-align: top;
+		margin-left: 10px;
+	}
+}

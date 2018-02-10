@@ -1,0 +1,100 @@
+@import './src/style/variables';
+@import './src/style/images';
+#searchContainer {
+	margin-right: 40px;
+	> div {
+		> button {
+	    text-transform: none;
+		  height: 34px;
+		  padding: 0 34px 0 45px;
+		  line-height: normal;
+		  position: relative;
+		  margin-top: 3px;
+		  background-repeat: no-repeat;
+		  background-size: 20px;
+		  background-position: 10px;
+			@extend %proIcon;
+
+		}
+	}
+}
+#searchModal {
+	background-color: rgb(255, 255, 255);
+	transition: all .3s;
+	opacity: 0;
+	display: block;
+  top: -100%;
+	bottom: auto;
+	> div {
+		background-color: transparent;
+		transform: scale(0.55);
+		transition: transform .4s;
+		height: 100%;
+		width: 90%;
+		margin: 0 auto;
+		> a {
+			display: none;
+		}
+		> button {
+			background: transparent;
+			border: none;
+		}
+		form {
+	    background-color: #fff;
+	    margin: auto;
+	    position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    display: block;
+	    width: 50%;
+	    max-width: 800px;
+	    height: 111px;
+			> div {
+				input {
+					text-align: left;
+	    		padding-left: 20px;
+	    		border-bottom: 5px solid $red;
+				}
+				ul {
+					list-style: none;
+					margin-top: 20px;
+					li {
+						cursor: pointer;
+						margin-bottom: 10px;
+						font-size: 28px;
+					}
+				}
+			}
+
+			a {
+		    position: absolute;
+			  right: 10px;
+			  top: 0px;
+				transition: color .2s;
+				span {
+					font-size: 50px;
+				}
+				&:hover {
+					color: $red;
+				}
+			}
+		}
+	}
+	&.visible {
+		display: block;
+		opacity: 1;
+		top: 0;
+		bottom: 0;
+		> div {
+			transform: scale(1);
+		}
+	}
+}
+
+
+.withIcon {
+	background-repeat: no-repeat;
+  background-position: 10px;
+}

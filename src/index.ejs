@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/style/uikit.min.css" rel="stylesheet" type="text/css" >
 	<% for (var chunk in htmlWebpackPlugin.files.css) { %>
 		<link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">
 	<% } %>
@@ -24,5 +27,7 @@
 	<link rel="icon" type="image/png" href="/assets/icons/favicon-16x16.png" sizes="16x16">
 	<link rel="manifest" href="./manifest.json">
 </head>
-<body></body>
+<body>
+	
+</body>
 </html>

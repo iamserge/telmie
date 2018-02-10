@@ -1,0 +1,13 @@
+
+@import './src/style/variables';
+
+#home {
+	min-height: 1000px;
+}
+#mainTitle {
+	text-align: center;
+	margin: 40px 0;
+	span {
+		color: $red;
+	}
+}

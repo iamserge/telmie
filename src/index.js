@@ -2,11 +2,14 @@
 // import 'isomorphic-fetch';
 import { h, render } from 'preact';
 import './style';
+import configureStore from './store/configure-store';
+import { Provider } from 'preact-redux';
 
 let root;
 function init() {
 	let App = require('./components/app').default;
-	root = render(<App />, document.body, root);
+	root = render(<Provider store={configureStore({})}><App /></Provider>, document.body, root);
+
 }
 
 // register ServiceWorker via OfflinePlugin, for prod only:

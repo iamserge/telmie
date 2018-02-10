@@ -1,0 +1,26 @@
+
+@import './src/style/variables';
+
+#search {
+	> h2 {
+		margin: 40px 0;
+		span {
+			color: $red;
+			font-weight: bold;
+			&.count {
+				color: $grey;
+				font-size: 16px;
+			}
+		}
+	}
+}
+#mainTitle {
+	text-align: center;
+	margin: 40px 0;
+	span {
+		color: $red;
+	}
+}
+#searchContainer {
+	
+}
