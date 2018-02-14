@@ -20,15 +20,15 @@ export default class SideBar extends Component {
 		return (
 			<div id={style.sideBar}>
 				<h3>Arrange by:</h3>
-				<div class={style.switch}>
+				<div class="switchContainer">
 					<Switch onClick={()=>this.toggleSwitch('hourly')} on={this.state.switched == 'hourly'}/>
 					<span>Hourly rate</span>
 				</div>
-				<div class={style.switch}>
+				<div class="switchContainer">
 					<Switch onClick={()=>this.toggleSwitch('rating')} on={this.state.switched == 'rating'}/>
 					<span>Rating</span>
 				</div>
-				<div class={style.switch}>
+				<div class="switchContainer">
 					<Switch onClick={()=>this.toggleSwitch('experience')} on={this.state.switched == 'experience'}/>
 					<span>Experience</span>
 				</div>

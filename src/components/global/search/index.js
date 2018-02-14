@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import velocity from 'velocity-animate';
 import Autosuggest from 'react-autosuggest';
 import $ from 'jquery';
-
+import { route } from 'preact-router';
 
 
 
@@ -144,10 +144,14 @@ export default class Header extends Component {
 			searchValue: '',
 			searchSuggestions: []
 		}
-		this.closeModal = this.closeModal.bind(this)
+		this.closeModal = this.closeModal.bind(this);
+    this.performSearch = this.performSearch.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 	animateIn (modal, dialog) {
     this.setState({showModal: true});
+    document.getElementById('searchInput').focus();
+    document.getElementById('searchInput').setSelectionRange(0, this.state.searchValue.length)
     //velocity(modal,  {scale: 1}, {display: 'block'}, 20);
     //setTimeout(()=>{velocity(dialog, {scale: 1}, {display: 'block'}, 20)},200);
   }
@@ -156,9 +160,13 @@ export default class Header extends Component {
     this.setState({
       searchValue: newValue
     });
-		document.getElementById('searchInput').focus();
-  };
 
+  };
+  componentWillReceiveProps(nextProps){
+    if (nextProps.hiddenSearchBox) {
+      this.setState({showModal: false})
+    }
+  }
   animateOut (modal, dialog) {
     this.setState({showModal: false});
 		$(modal).remove();
@@ -181,7 +189,21 @@ export default class Header extends Component {
     this.setState({
       searchSuggestions: []
     });
-  };
+  }
+
+  handleKeyPress =  (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      this.closeModal();
+      route('/search/' + this.state.searchValue);
+    }
+  }
+  performSearch(e){
+    e.stopPropagation();
+    this.closeModal();
+    route('/search/' + this.state.searchValue);
+
+  }
 
 	render() {
 		const inputProps = {
@@ -189,11 +211,12 @@ export default class Header extends Component {
       value: this.state.searchValue,
 			className: 'uk-search-input',
       onChange: this.onSearchChange,
+      onKeyPress: this.handleKeyPress,
 			id: 'searchInput'
     };
 		return (
 			<div id={style.searchContainer} className=''>
-				{this.state.showModal && (<a onClick={this.closeModal} className="uk-modal-close uk-close"></a>)}
+				{this.state.showModal && (<a onClick={this.closeModal} className="uk-modal-close uk-close" id="closeModal"></a>)}
 				<Modal
 					id={style.searchModal}
 		      close
@@ -217,7 +240,7 @@ export default class Header extends Component {
 				        renderSuggestion={renderSuggestion}
 				        inputProps={inputProps}
 				      />
-							<a href="#" className="withIcon">
+							<a href="#" className="withIcon" onClick={this.performSearch} >
 								<FontAwesome name='search' />
 							</a>
 

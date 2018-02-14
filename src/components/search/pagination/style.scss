@@ -1,0 +1,32 @@
+@import './src/style/variables';
+#pagination {
+	width: 79%;
+	float: right;
+	margin-bottom: 50px;
+	text-align: center;
+	#first {
+		float: left;
+	}
+	#last {
+		float: right;
+	}
+	#pages {
+		display: inline-block;
+		> a {
+			margin: 0 5px;
+		}
+	}
+	a {
+		background-color: $lightBackgroundGrey;
+    border-radius: 50px;
+    color: #2e2e2e;
+    padding: 4px 10px;
+		transition: all .2s;
+		&.active, &:hover {
+			color:white;
+			text-decoration: none;
+			background-color: $red;
+		}
+	}
+
+}

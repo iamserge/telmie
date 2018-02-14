@@ -3,12 +3,15 @@ import { Link } from 'preact-router';
 import style from './style.scss';
 import ReactStars from 'react-stars'
 import { apiRoot } from '../../../api'
-
+import { route } from 'preact-router';
 
 export default class Pro extends Component {
+	goToPro(id){
+		route('/pro/' + id);
+	}
 	render({person}) {
 		return (
-			<div class={style.person}>
+			<div class={style.person} onClick={()=>{this.goToPro(person.id)}}>
 				<div className={style.image}>
 					{ (person.avatar != null) ? (
 						<img src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />

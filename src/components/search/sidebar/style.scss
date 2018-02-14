@@ -2,32 +2,5 @@
 #sideBar {
 	width: 20%;
 	float: left;
-	.switch {
-	  margin-bottom: 5px;
-		> div {
-			background-color: $lightGrey;
-			border: none;
-			&.on {
-				background-color: $lightGrey;
-				> div {
-					left: 27px !important;
-				}
-			}
-			> div {
-				background-color: $red;
-				border: none;
-				box-shadow: none;
-		    width: 19px;
-    		height: 19px;
-    		top: 4px;
-				left: 4px;
-			}
-		}
-		> span {
-			top: 1px;
-			position: relative;
-			vertical-align: top;
-			margin-left: 10px;
-		}
-	}
+
 }

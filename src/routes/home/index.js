@@ -10,7 +10,7 @@ class Home extends Component {
 
 	}
 	render() {
-		console.log(style);
+
 		return (
 			<div id="home" className="uk-container uk-container-large" >
 				<Helmet
