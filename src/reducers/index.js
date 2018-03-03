@@ -17,7 +17,14 @@ const hiddenSearchBoxReduxer = (state = {}, action) => {
 
 
 const rootReducer = combineReducers({
-	hiddenSearchBox: hiddenSearchBoxReduxer
+	hiddenSearchBox: hiddenSearchBoxReduxer,
+	loggedInUser: user.loggedInUser,
+	logInFailure: user.logInError,
+	loggedInUserProCalls: user.proCalls,
+	loggedInUserPersonalCalls: user.personalCalls,
+	loggedInUserActivity: user.activity,
+	loggedInUserTransactions: user.transactions
+
 });
 
 export default rootReducer;

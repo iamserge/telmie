@@ -26,3 +26,52 @@
     height: 33px;
     margin-top: 25px;
 }
+.loggedInContainer {
+  padding-bottom: 20px;
+  position: relative;
+  top: 10px;
+	> * {
+		display: inline-block;
+	}
+	> span {
+		opacity: 0.2;
+		margin-left: 10px;
+		transition: transform .3s;
+	}
+	.dropdown {
+		right: 0;
+		top: 98%;
+		display: none;
+	}
+	&:hover {
+		> span {
+			transform: rotate(180deg)
+		}
+		.dropdown {
+			display: block;
+		}
+	}
+}
+
+.avatar {
+	width: 40px;
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+	&:after {
+		content: "";
+		background-image: url('/assets/avatar_mask.png');
+		width: 42px;
+		height: 42px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+		background-size: 100%;
+	}
+	img {
+		width: 42px;
+    height: 42px;
+    object-fit: cover;
+	}
+}

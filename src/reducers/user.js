@@ -1,12 +1,106 @@
 import { actionTypes } from '../actions';
+import { concat, sortBy, map, without } from 'lodash';
 
 
-
-export const details = (state = {}, action) => {
+export const loggedInUser = (state = {}, action) => {
 	switch (action.type) {
 
-		case actionTypes.DETAILS_FETCHED:
-			return action.details;
+		case actionTypes.LOG_IN_SUCCESS:
+			let user = action.userData;
+			user.userAuth = action.userAuth;
+			return user;
+
+		default:
+			return state;
+	}
+};
+
+
+export const logInError = (state = {}, action) => {
+	switch (action.type) {
+
+		case actionTypes.LOG_IN_FAILURE:
+			let date = new Date();
+			return date.getTime();
+
+		default:
+			return false;
+	}
+};
+
+
+
+export const proCalls = (state = [], action) => {
+	switch (action.type) {
+
+		case actionTypes.PRO_CALLS_RECEIVED:
+			return action.calls;
+
+		default:
+			return state;
+	}
+};
+//
+export const personalCalls = (state = [], action) => {
+	switch (action.type) {
+
+		case actionTypes.PERSONAL_CALLS_RECEIVED:
+			return action.calls;
+
+		default:
+			return state;
+	}
+};
+
+export const activity = (state = [], action) => {
+	let activity;
+	switch (action.type) {
+		case actionTypes.PERSONAL_CALLS_RECEIVED:
+			let personalCalls = action.calls.map((activity)=>{
+				let newActivity = activity;
+				newActivity.type = "PERSONAL"
+				return newActivity;
+			});
+
+			activity = state.concat(personalCalls);
+			activity = sortBy(activity, 'date');
+			activity = map(activity, (entry) => {
+				if (entry.status != 'SHORTLIST') return entry;
+			});
+			activity = without(activity, undefined);
+			return activity.slice(0, 10);
+
+
+		case actionTypes.PRO_CALLS_RECEIVED:
+			let proCalls = action.calls.map((activity)=>{
+				let newActivity = activity;
+				newActivity.type = "PRO"
+				return newActivity;
+
+			});
+
+			activity = state.concat(proCalls);
+			activity = sortBy(activity, 'date');
+			activity = map(activity, (entry) => {
+				if (entry.status != 'SHORTLIST') return entry;
+			});
+			activity = without(activity, undefined);
+
+			return activity.slice(0, 10);
+
+		default:
+			return state;
+	}
+
+};
+
+
+export const transactions = (state = [], action) => {
+	switch (action.type) {
+
+		case actionTypes.TRANSACTIONS_RECEIVED:
+
+			return action.transactions;
 
 		default:
 			return state;

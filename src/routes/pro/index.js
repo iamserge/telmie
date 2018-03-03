@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { getUserDetails } from '../../api/users';
+import { getProDetails } from '../../api/pros';
 import style from './style.scss';
 import ProDetails from '../../components/pro/pro-details';
 
@@ -16,7 +16,7 @@ class Search extends Component {
 
 	componentDidMount(){
 		const that = this;
-		getUserDetails(this.props.userId)
+		getProDetails(this.props.userId)
 	  .then(function(data) {
 	    that.setState({ pro: data });
 		});

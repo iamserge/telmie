@@ -1,3 +1,4 @@
+@import './uikit';
 @import './variables';
 @import './spinner';
 
@@ -113,5 +114,15 @@ button {
 		position: relative;
 		vertical-align: top;
 		margin-left: 10px;
+	}
+}
+.input-container {
+	margin-bottom: 10px;
+	label {
+    margin-bottom: 5px;
+    display: inline-block;
+	}
+	.uk-input {
+		height: 50px;
 	}
 }

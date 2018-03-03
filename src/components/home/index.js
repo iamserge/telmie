@@ -5,8 +5,7 @@ export default () => {
 	return (
 		<div className="uk-container uk-container-large" id={style.home}>
 			<h2 class="uk-heading-primary" id={style.mainTitle}>
-				Professional services in one place.<br/>
-				<span>Search, select, call</span>
+				Hi, I am Telmie
 			</h2>
 		</div>
 	);

@@ -8,6 +8,10 @@ import Search from '../routes/search';
 import Pro from '../routes/pro';
 import StaticPage from '../routes/static-page';
 import AboutUs from '../routes/about-us';
+import LogIn from '../routes/log-in';
+import Profile from '../routes/profile';
+import Activity from '../routes/activity';
+import AllTransactions from '../routes/transactions';
 
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
@@ -17,7 +21,14 @@ export const routes = {
 	SEARCH: '/search/:searchTerm',
 	PRO: '/pro/:userId',
 	ABOUT_US: '/about-us',
-	FAQ: '/help'
+	FAQ: '/help',
+	TERMS: '/terms',
+	PRIVACY: '/privacy',
+	CONTACT_US: '/contact-us',
+	LOG_IN: '/log-in',
+	PROFILE: '/profile',
+	ACTIVITY: '/activity',
+	TRANSACTIONS: '/transactions'
 };
 
 
@@ -31,6 +42,10 @@ export default class App extends Component {
 	}
 
 	componentWillMount() {
+		let userAuth = sessionStorage.getItem('USER_AUTH');
+		if (userAuth != null) {
+
+		}
     this.buildContext().then((prismicCtx) => {
       this.setState({ prismicCtx });
     }).catch((e) => {
@@ -61,8 +76,15 @@ export default class App extends Component {
 					<Home path={routes.HOME} />
 					<Search path={routes.SEARCH} />
 					<Pro path={routes.PRO} />
+					<Activity path={routes.ACTIVITY} />
+					<AllTransactions path={routes.TRANSACTIONS} />
 					<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
 					<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>
+					<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>
+					<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>
+					<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>
+					<LogIn path = { routes.LOG_IN } />
+					<Profile path = { routes.PROFILE } />
 				</Router>
 				<Footer />
 			</div>

@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { getUsers } from '../../api/users';
+import { getPros } from '../../api/pros';
 import style from './style.scss';
 import ProList from '../../components/search/pros-list';
 import SideBar from '../../components/search/sidebar';
@@ -20,7 +20,7 @@ class Search extends Component {
 
 	componentDidMount(){
 		const that = this;
-		getUsers(this.props.searchTerm).then(function(data) {
+		getPros(this.props.searchTerm).then(function(data) {
 	    that.setState({
 				pros: data,
 				searchTerm: that.props.searchTerm,
@@ -39,7 +39,7 @@ class Search extends Component {
 			const that = this;
 			that.setState({pros: []});
 
-			getUsers(nextProps.searchTerm).then(function(data) {
+			getPros(nextProps.searchTerm).then(function(data) {
 		    that.setState({
 					pros: data,
 					searchTerm: nextProps.searchTerm,

@@ -54,7 +54,13 @@ class StaticPage extends Component {
 
 			);
 		}
-		return <Spinner />
+		return (
+			<div  className="uk-container uk-container-small" id="staticPage" >
+				<Spinner />
+			</div>
+
+		);
+
 	}
 }
 
