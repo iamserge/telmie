@@ -1,5 +1,18 @@
 import * as user from '../api/users';
 import { actionTypes } from './index';
+const setCookie = (name,value,days) => {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+const eraseCookie = (name) => {
+    document.cookie = name+'=; Max-Age=-99999999;';
+}
 
 const logInSuccess = (response, authData) => ({
 	type: actionTypes.LOG_IN_SUCCESS,
@@ -8,6 +21,18 @@ const logInSuccess = (response, authData) => ({
 });
 const logInFailure = (response) => ({
 	type: actionTypes.LOG_IN_FAILURE
+});
+
+const loggedOff = (response) => ({
+	type: actionTypes.LOGGED_OFF
+});
+
+
+const registerSuccess = () => ({
+	type: actionTypes.REGISTER_SUCCESS,
+});
+const registerFailure = () => ({
+	type: actionTypes.REGISTER_FAILURE,
 });
 
 const authFailure = (response) => ({
@@ -38,10 +63,23 @@ export const logIn = (authData) => async (dispatch) => {
 		dispatch(logInFailure());
 	} else {
 		dispatch(logInSuccess(response, authData));
+		setCookie('USER_AUTH', authData, 30);
 	}
-
 };
 
+export const logOff = () => (dispatch) => {
+	dispatch(loggedOff());
+	eraseCookie('USER_AUTH');
+};
+export const register = (data) => async (dispatch) => {
+	const response = await user.register(data);
+	if (Object.keys(response).length === 0) {
+		dispatch(registerFailure());
+	} else {
+		dispatch(registerSuccess(response));
+		dispatch(logIn(response.authData));
+	}
+};
 
 
 

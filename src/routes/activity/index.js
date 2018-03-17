@@ -30,6 +30,13 @@ class Activity extends Component {
 		const user = this.props.userData;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
+				<h1>
+					All activity
+				</h1>
+				<div className="activity-header">
+					<a href="#">I consulted</a>
+					<a href="#">Consulted me</a>
+				</div>
 				<AllActivity allActivity = { this.props.activity } title="All activity"/>
 			</div>
 		);

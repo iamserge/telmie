@@ -1,5 +1,6 @@
 export const apiRoot = 'https://telmie.com/api/';
 export const apiUrls = {
+  REGISTER: apiRoot + 'users',
   SEARCH_USERS: apiRoot + 'users/search?q=',
   GET_USER_DETAILS: apiRoot + 'users/',
   LOG_IN: apiRoot + 'auth',

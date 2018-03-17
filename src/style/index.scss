@@ -97,10 +97,11 @@ button {
 			background-color: $lightGrey;
 			> div {
 				left: 27px !important;
+				background-color: $red;
 			}
 		}
 		> div {
-			background-color: $red;
+			background-color: $grey;
 			border: none;
 			box-shadow: none;
 	    width: 19px;
@@ -117,12 +118,85 @@ button {
 	}
 }
 .input-container {
-	margin-bottom: 10px;
+	margin-bottom: 15px;
+	position: relative;
 	label {
     margin-bottom: 5px;
     display: inline-block;
 	}
 	.uk-input {
 		height: 50px;
+	}
+}
+.subTitle {
+	color: #444;
+	text-align: center;
+}
+
+.double-input-container {
+	> .input-container {
+		width: 48.5%;
+		float: left;
+		&:last-child {
+			float: right;
+		}
+	}
+	&:after {
+		content: "";
+		clear: both;
+		display: block;
+	}
+}
+
+.rangeslider-horizontal {
+	.rangeslider__fill {
+		background-color: $red !important;
+	}
+	.rangeslider__handle {
+		box-shadow: none !important;
+		outline: none !important;
+		&:after {
+			display: none;
+		}
+	}
+	.rangeslider__handle-tooltip {
+		display: none !important;
+	}
+}
+
+.validation-tooltip {
+  color: white;
+  position: absolute;
+	left: -230px;
+  display: block;
+  width: 215px;
+  background: $red;
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 10px;
+  bottom: 7px;
+	&:after {
+		content:"";
+    position: absolute;
+    right: -8px;
+    top: 4px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 10px;
+		border-color: transparent transparent transparent $red;
+	}
+	&.right {
+    right: auto;
+    left: 106%;
+		&:after {
+	    left: -8px;
+			border-width: 15px 10px 15px 0;
+			border-color: transparent $red transparent transparent;
+
+		}
+
 	}
 }

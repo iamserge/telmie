@@ -6,15 +6,63 @@ import { connect } from 'preact-redux';
 import { bindActionCreators } from 'redux';
 import { hideSearchBox } from '../../../actions';
 import { apiRoot } from '../../../api';
+import { logIn, logOff } from '../../../actions/user';
 import FontAwesome from 'react-fontawesome';
+import Redirect from '../redirect';
 
+const getCookie = (name) => {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
 
 class Header extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      loggedOff: false
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if (typeof this.props.userAuth != 'undefined' && typeof nextProps.userAuth != 'undefined') {
+      if (Object.keys(this.props.userAuth).length != 0 && Object.keys(nextProps.userAuth).length === 0) {
+        this.setState({
+          loggedOff: true
+        })
+      } else {
+        this.setState({
+          loggedOff: false
+        })
+      }
+    }
+
+
+  }
+	componentDidMount(){
+		let userAuth = getCookie('USER_AUTH');
+		if (userAuth != null) {
+			this.props.logIn(userAuth)
+		}
+	}
+  logOff(){
+    this.setState({
+      loggedOff: true
+    });
+    this.props.logOff();
+  }
 	render() {
 		const user = this.props.userData;
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
 				<div className="uk-navbar-left">
+          { this.state.loggedOff && (
+            <Redirect to='/' />
+          )}
 					<Link href="/" id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
@@ -30,7 +78,7 @@ class Header extends Component {
 					 { (Object.keys(user).length === 0)  ? (
 						<nav>
 							<ul className="uk-navbar-nav">
-								<li><Link href="/" id={style.signUp}>Sign up</Link></li>
+								<li><Link href="/sign-up" id={style.signUp}>Sign up</Link></li>
 								<li><Link href="/log-in">Login</Link></li>
 							</ul>
 						</nav>
@@ -56,7 +104,7 @@ class Header extends Component {
 											<li><Link href="/transactions">Transactions</Link></li>
 											<li><Link href="/edit-profile">Edit Profile</Link></li>
 							        <li className="uk-nav-divider"></li>
-							        <li><a href="#">Log out</a></li>
+							        <li><a onClick={()=>this.logOff()}>Log out</a></li>
 							    </ul>
 							</div>
 
@@ -80,7 +128,9 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	hideSearchBox
+	hideSearchBox,
+	logIn,
+	logOff
 }, dispatch);
 
 

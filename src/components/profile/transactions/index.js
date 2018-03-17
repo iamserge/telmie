@@ -14,15 +14,11 @@ export default class Transactions extends Component {
 		return (
 			<div className={style.transactions}>
 
-					{ typeof this.props.limit != 'undefined' ? (
+					{ (typeof this.props.limit != 'undefined') && (
 						<h2>
 							{ this.props.title }
 							<Link href='/transations'>View all</Link>
 						</h2>
-					) : (
-						<h1>
-							{ this.props.title }
-						</h1>
 					)}
 
 

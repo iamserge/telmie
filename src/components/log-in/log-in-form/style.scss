@@ -1,12 +1,13 @@
 @import './src/style/variables';
 .logInForm {
-	width: 400px;
+	width: 450px;
 	margin: 0 auto;
 	button {
-    height: 50px;
-    font-size: 20px;
+    height: 60px;
+    font-size: 18px;
     margin-top: 20px;
-		width: 100%;
+    width: 100%;
+    font-weight: bold;
 	}
 }
 .failure {

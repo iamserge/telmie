@@ -69,3 +69,24 @@ export function getTransactions(authData, pageNumber){
 		throw new Error(error.message);
 	});
 }
+
+
+
+
+
+export function register(data){
+
+	let headers = new Headers();
+	headers.append("Content-Type", "application/json ");
+	return fetch(apiUrls.REGISTER, { method: 'POST', headers: headers, body: JSON.stringify( data )}).then(response => {
+    if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
+			return {};
+		}
+		return response.json().then(json => {
+			return {authData: window.btoa(data.email + ':' + data.password)};
+		});
+
+	}, error => {
+		throw new Error(error.message);
+	});
+}

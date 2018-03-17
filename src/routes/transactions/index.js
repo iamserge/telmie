@@ -29,7 +29,8 @@ class AllTransactions extends Component {
 		const user = this.props.userData;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
-				<Transactions transactions = { this.props.transactions } title="All transactions"/>
+				<h1>All transactions</h1>
+				<Transactions transactions = { this.props.transactions } />
 			</div>
 		);
 	}

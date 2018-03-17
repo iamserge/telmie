@@ -9,9 +9,6 @@ export default class AllActivity extends Component {
 	render({allActivity}) {
 		return (
 			<div className={style.activityList}>
-				<h1>
-					{ this.props.title }
-				</h1>
 				<div className={style.inner}>
 					<div className={style.header}>
 						<div className={style.type}>Type</div>

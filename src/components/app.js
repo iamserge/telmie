@@ -9,6 +9,7 @@ import Pro from '../routes/pro';
 import StaticPage from '../routes/static-page';
 import AboutUs from '../routes/about-us';
 import LogIn from '../routes/log-in';
+import SignUp from '../routes/sign-up';
 import Profile from '../routes/profile';
 import Activity from '../routes/activity';
 import AllTransactions from '../routes/transactions';
@@ -25,6 +26,7 @@ export const routes = {
 	TERMS: '/terms',
 	PRIVACY: '/privacy',
 	CONTACT_US: '/contact-us',
+	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
 	ACTIVITY: '/activity',
@@ -42,10 +44,7 @@ export default class App extends Component {
 	}
 
 	componentWillMount() {
-		let userAuth = sessionStorage.getItem('USER_AUTH');
-		if (userAuth != null) {
 
-		}
     this.buildContext().then((prismicCtx) => {
       this.setState({ prismicCtx });
     }).catch((e) => {
@@ -84,6 +83,7 @@ export default class App extends Component {
 					<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>
 					<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>
 					<LogIn path = { routes.LOG_IN } />
+					<SignUp path = { routes.SIGN_UP } />
 					<Profile path = { routes.PROFILE } />
 				</Router>
 				<Footer />

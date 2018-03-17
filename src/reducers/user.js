@@ -1,5 +1,5 @@
 import { actionTypes } from '../actions';
-import { concat, sortBy, map, without } from 'lodash';
+import { concat, orderBy, map, without } from 'lodash';
 
 
 export const loggedInUser = (state = {}, action) => {
@@ -10,6 +10,9 @@ export const loggedInUser = (state = {}, action) => {
 			user.userAuth = action.userAuth;
 			return user;
 
+		case actionTypes.LOGGED_OFF:
+			return {};
+			
 		default:
 			return state;
 	}
@@ -28,7 +31,29 @@ export const logInError = (state = {}, action) => {
 	}
 };
 
+export const registerSuccess = (state = {}, action) => {
+	switch (action.type) {
 
+		case actionTypes.REGISTER_SUCCESS:
+			return true;
+
+		case actionTypes.LOG_IN_SUCCESS:
+			return true;
+
+		default:
+			return false;
+	}
+};
+export const registerFailure = (state = {}, action) => {
+	switch (action.type) {
+
+		case actionTypes.REGISTER_FAILURE:
+			return true;
+
+		default:
+			return false;
+	}
+};
 
 export const proCalls = (state = [], action) => {
 	switch (action.type) {
@@ -63,7 +88,7 @@ export const activity = (state = [], action) => {
 			});
 
 			activity = state.concat(personalCalls);
-			activity = sortBy(activity, 'date');
+			activity = orderBy(activity, 'date', 'desc');
 			activity = map(activity, (entry) => {
 				if (entry.status != 'SHORTLIST') return entry;
 			});
@@ -80,7 +105,8 @@ export const activity = (state = [], action) => {
 			});
 
 			activity = state.concat(proCalls);
-			activity = sortBy(activity, 'date');
+			activity = orderBy(activity, 'date', 'desc');
+
 			activity = map(activity, (entry) => {
 				if (entry.status != 'SHORTLIST') return entry;
 			});
@@ -99,8 +125,8 @@ export const transactions = (state = [], action) => {
 	switch (action.type) {
 
 		case actionTypes.TRANSACTIONS_RECEIVED:
-
-			return action.transactions;
+			let transactions = orderBy(action.transactions, 'date', 'desc');
+			return transactions;
 
 		default:
 			return state;

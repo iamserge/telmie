@@ -16,8 +16,8 @@ const convertDuration = (totalSeconds) => {
 	let minutes = parseInt(totalSeconds / 60),
 			seconds = totalSeconds - (minutes * 60);
 
-	if (minutes.length == 1) minutes = '0' + minutes;
-	if (seconds.length == 1) seconds = '0' + seconds;
+	if (minutes.toString().length == 1) minutes = '0' + minutes;
+	if (seconds.toString().length == 1) seconds = '0' + seconds;
 	return minutes + ':' + seconds;
 
 }
