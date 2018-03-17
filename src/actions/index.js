@@ -11,7 +11,9 @@ export const actionTypes = {
 	AUTH_FAILURE: 'AUTH_FAILURE',
 	REGISTER_SUCCESS: 'REGISTER_SUCCESS',
 	REGISTER_FAILURE: 'REGISTER_FAILURE',
-	LOGGED_OFF: 'LOGGED_OFF'
+	LOGGED_OFF: 'LOGGED_OFF',
+	EDIT_SUCCESS: 'EDIT_SUCCESS',
+	EDIT_FAILURE: 'EDIT_FAILURE'
 };
 
 //export { getCart, addToCart, updateItemQuantity, basketActionSeen } from './cart';

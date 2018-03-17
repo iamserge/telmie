@@ -6,9 +6,10 @@ import Switch from 'react-toggle-switch'
 import FontAwesome from 'react-fontawesome';
 import Select from 'react-select';
 import SimpleReactValidator from 'simple-react-validator';
+import { apiRoot } from '../../../api';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 
-import Slider from 'react-rangeslider'
-import 'react-rangeslider/lib/index.css'
 const Services = [
 	{
 		name: "Education",
@@ -27,23 +28,25 @@ const Services = [
 		categories: ["Personal trainer", "Yuga instructor", "Meditation instructor", "Dietologist", "Sport coach", "Fitness professional", "Spiritual coach"]
 	},
 ]
-export default class SignUpForm extends Component {
+export default class EditProfileForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: '',
-			profession: '',
-			professionDescription: '',
-			sectorCategory: '',
-			sector: '',
-			rate: '0.10',
+			name: this.props.userData.name,
+			lastName: this.props.userData.lastName,
+			mobile: (this.props.userData.mobile != 'TBC') ? this.props.userData.mobile : '' ,
+			dateOfBirth: (this.props.userData.dateOfBirth != 'TBC') ? this.props.userData.dateOfBirth : '' ,
+			location: (this.props.userData.location != 'TBC') ? this.props.userData.location : '' ,
+
+			profession: (this.props.userData.pro != null) ? this.props.userData.pro.profession : '',
+			professionDescription: (this.props.userData.pro != null) ? this.props.userData.pro.professionDescription : '',
+			sectorCategory: (this.props.userData.pro != null) ? this.props.userData.pro.subCategory : '',
+			sector: (this.props.userData.pro != null) ? this.props.userData.pro.category : '',
+			rate: (this.props.userData.pro != null) ? this.props.userData.pro.costPerMinute : '',
 			sectorCategories: [],
-			pro: false,
+			pro: (this.props.userData.pro != null) ? true : null ,
 			loading: false,
-			visiblePassword: false
+			registerPro: false
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSelectSector = this.onSelectSector.bind(this);
@@ -92,6 +95,7 @@ export default class SignUpForm extends Component {
 		})
 
 	}
+
 	onSliderChange(rate) {
     this.setState({ rate: rate.toFixed(2)  })
   }
@@ -107,18 +111,34 @@ export default class SignUpForm extends Component {
 	}
 
 	render({}) {
+		const userData  = this.props.userData;
 
 		if (!this.state.loading) {
-			if (!this.props.registerSuccess) {
-				return (
-					<div className={style.signUpForm}>
-					  { this.props.registerFailure && (
-							<div className={style.failure}>Sorry, account with this email address already exists</div>
-						)}
+			return (
+				<div className={style.editProfile}>
+				  { this.props.registerFailure && (
+						<div className={style.failure}>Sorry, account with this email address already exists</div>
+					)}
+					<div className={style.imageContainer}>
+						<div className={style.image}>
+							{ (userData.avatar != null) ? (
+								<img src={apiRoot + 'image/' + userData.avatar.id} alt={userData.name + ' ' + userData.lastName} />
+							) : (
+								<img src="/assets/nouserimage.jpg" alt={userData.name + ' ' + userData.lastName} />
+							)}
+						</div>
+						<div className={style.upload}>
+							<button onClick={()=>{}} className="uk-button">
+								Upload new
+							</button>
+						</div>
+
+					</div>
+					<div className={style.userDetails}>
 						<div className="double-input-container">
 							<div className="input-container">
 								<label for="firstName">First name</label>
-								<input type="text" name="firstName" value={this.state.firstName} onChange={this.onChange} className="uk-input" id="firstName"/>
+								<input type="text" name="name" value={this.state.name} onChange={this.onChange} className="uk-input" id="name"/>
 
 								{this.validator.message('firstName', this.state.firstName, 'required', 'validation-tooltip', {required: 'Please enter first name'})}
 							</div>
@@ -129,33 +149,32 @@ export default class SignUpForm extends Component {
 								{this.validator.message('lastName', this.state.lastName, 'required', 'validation-tooltip right', {required: 'Please enter last name'})}
 							</div>
 						</div>
-
-						<div className="input-container">
-							<label for="email">Email</label>
-							<input type="text" name="email" value={this.state.email} onChange={this.onChange} className="uk-input" id="email"/>
-
-							{this.validator.message('email', this.state.email, 'required|email', 'validation-tooltip',  {required: 'Please enter email', email: 'Please enter valid email'})}
-						</div>
-						<div className="input-container" id={style.passwordContainer}>
-							<div onClick={()=>this.setState({visiblePassword: !this.state.visiblePassword})} id={style.eyeContainer}>
-								{ this.state.visiblePassword ? (
-									<FontAwesome name='eye-slash' />
-								) : (
-									<FontAwesome name='eye' />
-								)}
+						<div className="double-input-container">
+							<div className="input-container">
+								<label for="firstName">Mobile phone</label>
+								<input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} className="uk-input" id="mobile"/>
 
 							</div>
-							<label for="password">Password</label>
-							<input type={this.state.visiblePassword ? 'text' : 'password'} name="password" value={this.state.password} onChange={this.onChange} className="uk-input"	id="password" />
+							<div className="input-container">
+								<label for="password">Location</label>
+								<input type="text" name="location" value={this.state.location} onChange={this.onChange} className="uk-input"	id="location" />
 
-							{this.validator.message('email', this.state.password, 'required', 'validation-tooltip',  {required: 'Please enter password'})}
+							</div>
 						</div>
-						<div className="switchContainer" id={style.proSwitch}>
-							<Switch onClick={()=>this.setState({pro: !this.state.pro})} on={this.state.pro}/>
-							<span>Register as pro?</span>
+						<div className="input-container">
+							<label for="dateOfBirth">Date of birth</label>
+							<input type="text" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.onChange} className="uk-input" id="dateOfBirth"/>
 						</div>
-						{ this.state.pro && (
+						{ (!this.state.pro) && (
+							<div className="switchContainer" id={style.proSwitch}>
+								<Switch onClick={()=>this.setState({registerPro: !this.state.registerPro})} on={this.state.registerPro}/>
+								<span>Register as pro?</span>
+							</div>
+						)}
+
+						{ (this.state.pro || this.state.registerPro ) && (
 							<div id={style.proFormContainer}>
+								<h3>Pro details</h3>
 								<div id={style.services}>
 									<label>Sector</label>
 									<div>
@@ -182,54 +201,42 @@ export default class SignUpForm extends Component {
 										{this.validator.message('sectorCategory', this.state.sectorCategory, 'required', 'validation-tooltip',  {required: 'Please select category'})}
 									</div>
 								)}
-								{ this.state.sector.length > 0 && this.state.sectorCategory.length > 0 && (
-									<div>
-										<div className="input-container">
-											<label for="profession">Profession</label>
-											<input type="text" name="profession" value={this.state.profession} onChange={this.onChange} className="uk-input" id="profession"/>
+								<div>
+									<div className="input-container">
+										<label for="profession">Profession</label>
+										<input type="text" name="profession" value={this.state.profession} onChange={this.onChange} className="uk-input" id="profession"/>
 
-											{this.validator.message('profession', this.state.profession, 'required', 'validation-tooltip',  {required: 'Please enter profession'})}
-										</div>
-										<div className="input-container" id={style.descriptionContainer}>
-											<label for="professionDescription">Description</label>
-											<textarea name="professionDescription" value={this.state.professionDescription} onChange={this.onChange} className="uk-input" id={style.professionDescription}/>
+										{this.validator.message('profession', this.state.profession, 'required', 'validation-tooltip',  {required: 'Please enter profession'})}
+									</div>
+									<div className="input-container" id={style.descriptionContainer}>
+										<label for="professionDescription">Description</label>
+										<textarea name="professionDescription" value={this.state.professionDescription} onChange={this.onChange} className="uk-input" id={style.professionDescription}/>
 
-											{this.validator.message('professionDescription', this.state.professionDescription, 'required', 'validation-tooltip',  {required: 'Please enter description'})}
-										</div>
-										<div className="input-container" id={style.rateContainer}>
-											<label for="rate">Rate</label>
-											<Slider
-							          min={0.1}
-							          max={20}
-							          step={0.1}
-							          value={this.state.rate}
-							          onChange={this.onSliderChange}
-							        />
-											<div className={style.rate}>
-												<span>£{this.state.rate} </span>
-												per minute
-											</div>
+										{this.validator.message('professionDescription', this.state.professionDescription, 'required', 'validation-tooltip',  {required: 'Please enter description'})}
+									</div>
+									<div className="input-container" id={style.rateContainer}>
+										<label for="rate">Rate</label>
+										<Slider
+						          min={0.1}
+						          max={20}
+						          step={0.1}
+						          value={this.state.rate}
+						          onChange={this.onSliderChange}
+						        />
+										<div className={style.rate}>
+											<span>£{this.state.rate} </span>
+											per minute
 										</div>
 									</div>
-								)}
-
+								</div>
 							</div>
 						)}
-						<span className={style.terms}>
-							By clicking on "Sign Up" button, I agree	to the <a target="_blank" href="/terms">Terms of use </a> and the <a target="_blank" href="/privacy">Privacy Policy</a>
-						</span>
-						<button className="uk-button" onClick={this.signUp}>Sign up</button>
+						<button className="uk-button" onClick={()=>{this.setState({loading: true});this.props.editDetails(this.state)}}>Save</button>
 					</div>
-				)
-			} else {
-				return (
-					<div className={style.signUpForm}>
-						<div className={style.success}>
-							Thank you <span> {this.state.firstName} </span> for registering, please check your email for verefication
-						</div>
-					</div>
-				)
-			}
+
+
+				</div>
+			)
 
 		} else {
 			return <Spinner />

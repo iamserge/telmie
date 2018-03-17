@@ -1,6 +1,10 @@
 
 @import './src/style/variables';
-
+#editProfile {
+	h1 {
+		margin-bottom: 40px;
+	}
+}
 #signUp {
 	> h2 {
 		text-align: center;

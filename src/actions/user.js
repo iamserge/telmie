@@ -27,6 +27,15 @@ const loggedOff = (response) => ({
 	type: actionTypes.LOGGED_OFF
 });
 
+const editSuccess = (response, userAuth) => ({
+	type: actionTypes.EDIT_SUCCESS,
+  userData: response,
+  userAuth: userAuth
+});
+const editFailure = () => ({
+	type: actionTypes.EDIT_FAILURE,
+});
+
 
 const registerSuccess = () => ({
 	type: actionTypes.REGISTER_SUCCESS,
@@ -78,6 +87,17 @@ export const register = (data) => async (dispatch) => {
 	} else {
 		dispatch(registerSuccess(response));
 		dispatch(logIn(response.authData));
+	}
+};
+
+export const editDetails = (data) => async (dispatch) => {
+	const response = await user.editDetails(data);
+	if (Object.keys(response).length === 0) {
+		dispatch(editFailure());
+	} else {
+
+		dispatch(editSuccess(response, data.userAuth));
+
 	}
 };
 

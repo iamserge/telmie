@@ -12,11 +12,13 @@ import LogIn from '../routes/log-in';
 import SignUp from '../routes/sign-up';
 import Profile from '../routes/profile';
 import Activity from '../routes/activity';
+import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
 
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
+
 export const routes = {
 	HOME: '/',
 	SEARCH: '/search/:searchTerm',
@@ -30,7 +32,8 @@ export const routes = {
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
 	ACTIVITY: '/activity',
-	TRANSACTIONS: '/transactions'
+	TRANSACTIONS: '/transactions',
+	EDIT_PROFILE: '/edit-profile'
 };
 
 
@@ -76,15 +79,19 @@ export default class App extends Component {
 					<Search path={routes.SEARCH} />
 					<Pro path={routes.PRO} />
 					<Activity path={routes.ACTIVITY} />
+
 					<AllTransactions path={routes.TRANSACTIONS} />
 					<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
 					<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>
 					<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>
 					<StaticPage path = { routes.PRIVACY } prismicCtx = { this.state.prismicCtx } uid = { uids.PRIVACY }/>
 					<StaticPage path = { routes.CONTACT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.CONTACT_US }/>
+
+
 					<LogIn path = { routes.LOG_IN } />
 					<SignUp path = { routes.SIGN_UP } />
 					<Profile path = { routes.PROFILE } />
+					<EditProfile path = { routes.EDIT_PROFILE } />
 				</Router>
 				<Footer />
 			</div>

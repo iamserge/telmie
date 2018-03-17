@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 import style from './style.scss';
-import ReactStars from 'react-stars'
+import ReactStars from 'react-stars';
 import { apiRoot } from '../../../api'
 import { route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';

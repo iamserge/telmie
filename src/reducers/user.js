@@ -3,16 +3,21 @@ import { concat, orderBy, map, without } from 'lodash';
 
 
 export const loggedInUser = (state = {}, action) => {
+	let user;
 	switch (action.type) {
-
 		case actionTypes.LOG_IN_SUCCESS:
-			let user = action.userData;
+			user = action.userData;
+			user.userAuth = action.userAuth;
+			return user;
+
+		case actionTypes.EDIT_SUCCESS:
+			user = action.userData;
 			user.userAuth = action.userAuth;
 			return user;
 
 		case actionTypes.LOGGED_OFF:
 			return {};
-			
+
 		default:
 			return state;
 	}

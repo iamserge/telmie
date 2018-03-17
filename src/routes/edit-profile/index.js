@@ -2,9 +2,10 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import SignUpForm from '../../components/sign-up/sign-up-form';
+import EditProfileForm from '../../components/edit-profile/edit-profile-form';
 import style from './style.scss';
-import { register } from '../../actions/user';
+import { editDetails } from '../../actions/user';
+import Spinner from '../../components/global/spinner';
 
 import { route } from 'preact-router';
 import Redirect from '../../components/global/redirect';
@@ -12,6 +13,7 @@ import Redirect from '../../components/global/redirect';
 class EditProfile extends Component {
 	constructor(props){
 		super(props);
+		this.editDetails = this.editDetails.bind(this);
 	}
 	componentDidMount(){
 
@@ -19,38 +21,53 @@ class EditProfile extends Component {
 	componentWillReceiveProps(nextProps) {
 
 	}
-	render() {
-		if (!this.state.loggedIn) {
-			return (
-				<div className="uk-container uk-container-small" id="editProfile" >
-					<div>
-							{!this.props.registerSuccess ? (
-								<h1>Sign up</h1>
-							) : (
-								<h1>Success!</h1>
-							) }
-							<SignUpForm register = { this.props.register } registerSuccess = { this.props.registerSuccess } registerFailure = { this.props.registerFailure }/>
-						</div>
-				</div>
 
-			);
+	editDetails(data){
+		let newDetails = this.props.userData;
+		newDetails.name = data.name,
+		newDetails.lastName = data.lastName;
+		newDetails.mobile = data.mobile;
+		newDetails.dateOfBirth = data.dateOfBirth;
+		newDetails.location = data.location
+		if (data.pro) {
+			newDetails.pro = {
+				profession: data.profession,
+				professionDescription: data.professionDescription,
+				category: data.sector,
+				subCategory: data.sectorCategory,
+				costPerMinute: data.rate
+			}
 		} else {
-			return (<Redirect to='/profile' />)
+			newDetails.pro = null
 		}
+		this.props.editDetails(newDetails);
+	}
+	render() {
+		return (
+			<div className="uk-container uk-container-small" id="editProfile" >
+				<h1>Edit profile</h1>
+				{(Object.keys(this.props.userData).length != 0) ? (
+					<EditProfileForm userData = { this.props.userData } editDetails = { this.editDetails }/>
+				) : (
+					<Spinner />
+				)}
+
+			</div>
+
+		);
 
 	}
 }
 
 const mapStateToProps = (state) => ({
-	registerSuccess: state.registerSuccess,
-	registerFailure: state.registerFailure
+	userData: state.loggedInUser
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	register
+	editDetails
 }, dispatch);
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(SignUp);
+)(EditProfile);

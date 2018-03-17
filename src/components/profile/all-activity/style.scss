@@ -1,6 +1,6 @@
 @import './src/style/variables';
 .activityList {
-	margin-top: 60px;
+	margin-top: 10px;
 	h2 {
 		a {
 			float: right;
@@ -19,6 +19,25 @@
 		padding: 20px;
     box-shadow: 0 0 11px rgba(0,0,0,.1);
 
+	}
+}
+.activityHeader {
+	text-align: right;
+	margin-bottom: 20px;
+	> button {
+		background-color: $lightGrey;
+    border-radius: 10px;
+    padding: 8px 23px;
+    margin-left: 10px;
+		border: none;
+		color: $black !important;
+		outline: none;
+		cursor: pointer;
+		&.selected, &:hover {
+			background-color: $red;
+			color: white !important;
+			text-decoration: none !important;
+		}
 	}
 }
 .empty {

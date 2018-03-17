@@ -2,28 +2,100 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-
+import { getProCalls, getPersonalCalls} from '../../api/users'
 import style from './style.scss';
 import { logIn } from '../../actions/user';
 import { route } from 'preact-router';
-import { getProCalls, getPersonalCalls} from '../../actions/user';
 import AllActivity from '../../components/profile/all-activity';
+import Spinner from '../../components/global/spinner';
 
-
-
+const MAX_ITEMS = 10;
 
 
 class Activity extends Component {
 
 	constructor(props) {
 		super(props);
-
+		this.state = {
+			proCalls: false,
+			activity: [],
+			cutActivity: [],
+			currentPage: 1
+		}
+		this.showConsultedMe = this.showConsultedMe.bind(this);
+		this.showConsulted = this.showConsulted.bind(this);
+		this.nextPage = this.nextPage.bind(this);
+		this.previousPage = this.previousPage.bind(this);
+		this.changePage = this.changePage.bind(this);
+		this.changeActivityPage = this.changeActivityPage.bind(this);
 	}
 	componentDidMount(){
-		this.props.getProCalls(this.props.userData.userAuth);
-		this.props.getPersonalCalls(this.props.userData.userAuth);
+		if (this.props.userData.userAuth) {
+			let that = this;
+			getPersonalCalls(this.props.userData.userAuth).then(function(data) {
+		    that.setState({
+					activity: data,
+					loading: false,
+					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
+				});
+			}).catch(function(error) {
+					that.setState({
+						activity: [],
+						loading: false
+					})
+			});
+		}
+	}
+	nextPage(){
+		this.setState({
+			currentPage: this.state.currentPage++
+		});
+		this.changeActivityPage(this.state.currentPage++);
+	}
+	previousPage(){
+		this.setState({
+			currentPage: this.state.currentPage--
+		});
+		this.changeActivityPage(this.state.currentPage--);
+	}
+	changePage(page) {
+		this.setState({
+			currentPage: page
+		});
+		this.changeActivityPage(page);
+	}
+	changeActivityPage(page){
+		this.setState({
+			cutActivity: this.state.activity.slice( (page - 1) * MAX_ITEMS,  page * MAX_ITEMS)
+		})
+	}
+
+	showConsulted(){
+		this.setState({
+			proCalls: false
+		})
+	}
+	showConsultedMe(){
+		this.setState({
+			proCalls: true
+		})
 	}
 	componentWillReceiveProps(nextProps) {
+		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
+			let that = this;
+			getPersonalCalls(nextProps.userData.userAuth).then(function(data) {
+		    that.setState({
+					activity: data,
+					loading: false,
+					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
+				});
+			}).catch(function(error) {
+					that.setState({
+						activity: [],
+						loading: false
+					})
+			});
+		}
 
 	}
 	render() {
@@ -33,11 +105,19 @@ class Activity extends Component {
 				<h1>
 					All activity
 				</h1>
-				<div className="activity-header">
-					<a href="#">I consulted</a>
-					<a href="#">Consulted me</a>
-				</div>
-				<AllActivity allActivity = { this.props.activity } title="All activity"/>
+				<AllActivity
+					showConsultedMe = { this.showConsultedMe }
+					showConsulted = { this.showConsulted }
+					activity = { this.state.cutActivity }
+					allActivity = { this.state.activity }
+					currentPage = {this.state.currentPage}
+
+					changePage = { this.changePage }
+					nextPage = { this.nextPage }
+					previousPage = { this.ppreviousPage }
+					max = {MAX_ITEMS}
+					proCalls = { this.state.proCalls }/>
+
 			</div>
 		);
 	}

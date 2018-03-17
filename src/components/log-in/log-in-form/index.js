@@ -46,7 +46,7 @@ export default class LogInForm extends Component {
 					</div>
 					<div className="input-container">
 						<label for="password">Password</label>
-						<input type="text" name="password" type="password" value={this.state.password} onChange={this.onChange} className="uk-input"	id="password" />
+						<input type="text" name="password" type="password"onKeyPress={e => {if (e.key === 'Enter') {this.logIn()}}} value={this.state.password} onChange={this.onChange} className="uk-input"	id="password" />
 					</div>
 					<button className="uk-button" onClick={this.logIn}>Log in</button>
 				</div>
