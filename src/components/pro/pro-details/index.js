@@ -16,12 +16,15 @@ export default class Pro extends Component {
 		}
 		return (
 			<div class={style.person}>
-				<div className={style.image}>
-					{ (person.avatar != null) ? (
-						<img src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
-					) : (
-						<img src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
-					)}
+				<div className={style.imageContainer}>
+					<div className={style.image}>
+						{ (person.avatar != null) ? (
+							<img src={apiRoot + 'image/' + person.avatar.id} alt={person.name + ' ' + person.lastName} />
+						) : (
+							<img src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
+						)}
+					</div>
+					<button  id={style.callPro} className="uk-button">Call pro</button>
 				</div>
 				<div className={style.info}>
 					<h2>{person.name} {person.lastName}</h2>

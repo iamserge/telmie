@@ -19,7 +19,8 @@ class AllTransactions extends Component {
 		super(props);
 		this.state = {
 			cutTransactions : [],
-			currentPage: 1
+			currentPage: 1,
+			loading: false
 		}
 
 		this.nextPage = this.nextPage.bind(this);
@@ -29,7 +30,13 @@ class AllTransactions extends Component {
 
 	}
 	componentDidMount(){
-		this.props.getTransactions(this.props.userData.userAuth);
+		if (typeof this.props.userData.userAuth != 'undefined') {
+			this.setState({
+				loading: true
+			})
+			this.props.getTransactions(this.props.userData.userAuth);
+		}
+
 	}
 
 		nextPage(){
@@ -57,28 +64,38 @@ class AllTransactions extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
+		if ( typeof nextProps.userData.userAuth != 'undefined' && (nextProps.userData.userAuth != this.props.userData.userAuth)	) {
+			this.setState({
+				loading: true
+			})
 			this.props.getTransactions(nextProps.userData.userAuth);
+		} else {
+
 		}
 
-		if (nextProps.transactions.length > this.props.transactions.length) {
-				this.setState({
-					cutTransactions: nextProps.transactions.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
-				})
+		if (nextProps.transactions.length  > 0) {
+			this.setState({
+				loading: false
+			})
+			this.setState({
+				cutTransactions: nextProps.transactions.slice( (this.state.currentPage - 1) * MAX_ITEMS,  this.state.currentPage * MAX_ITEMS)
+			})
 		}
+
 	}
 	render() {
 		const user = this.props.userData;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>All transactions</h1>
-				<Transactions transactions = { this.state.cutTransactions } />
+				<Transactions transactions = { this.state.cutTransactions } loading = { this.state.loading }/>
 				<Pagination
 					list = { this.props.transactions }
 					changePage = { this.changePage }
 					nextPage = { this.nextPage }
 					previousPage = { this.previousPage }
 					currentPage = { this.state.currentPage }
+
 					max = {MAX_ITEMS}
 					/>
 			</div>

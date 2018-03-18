@@ -26,8 +26,14 @@ export default class AllActivity extends Component {
 					{ activity.length > 0 && activity.map(activity => (
 						<Activity key={ activity.id } activity={ activity }/>
 					))}
-					{ activity.length == 0 && (
+					{ activity.length == 0 && !this.props.loading && (
 						<div className={style.empty}>No recent activity</div>
+					)}
+
+					{ activity.length == 0 && this.props.loading && (
+						<div className={style.spinnerContainer}>
+							<Spinner />
+						</div>
 					)}
 
 				</div>

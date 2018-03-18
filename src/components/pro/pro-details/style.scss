@@ -10,9 +10,14 @@
 		vertical-align: top;
 	}
 }
+.imageContainer {
+	width: 300px;
+	position: relative;
+}
 .image {
 	width: 300px;
 	position: relative;
+	overflow: hidden;
 	&:after {
 		content: "";
 		background-image: url('/assets/avatar_mask_large.png');
@@ -29,6 +34,13 @@
     height: 291px;
     object-fit: cover;
 	}
+}
+#callPro {
+	width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+  margin-top: 30px;
 }
 .info {
 	width: 50%;

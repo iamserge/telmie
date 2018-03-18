@@ -75,12 +75,12 @@ export default class App extends Component {
 			<div id="app">
 				<Header />
 				<Router onChange={this.handleRoute}>
-					<Home path={routes.HOME} />
 					<Search path={routes.SEARCH} />
 					<Pro path={routes.PRO} />
 					<Activity path={routes.ACTIVITY} />
 
 					<AllTransactions path={routes.TRANSACTIONS} />
+					<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />
 					<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
 					<StaticPage path = { routes.FAQ } prismicCtx = { this.state.prismicCtx } uid = { uids.FAQ }/>
 					<StaticPage path = { routes.TERMS } prismicCtx = { this.state.prismicCtx } uid = { uids.TERMS }/>

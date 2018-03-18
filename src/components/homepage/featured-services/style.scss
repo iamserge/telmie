@@ -1,0 +1,29 @@
+@import './src/style/variables';
+.featuredServices {
+	h2 {
+		font-size: 50px;
+    margin: 40px 0 30px!important;
+    font-weight: 700;
+    color: $blue;
+	}
+
+}
+.service {
+	background-color: $lightRed2;
+	padding: 20px 60px;
+  display: flex;
+  margin-bottom: 20px;
+  color: white;
+  font-size: 24px;
+
+	.left {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    border-right: 3px solid white;
+    padding-right: 50px;
+    margin-right: 50px;
+    line-height: 104px;
+		width: 35%;
+	}
+}

@@ -20,7 +20,8 @@ class Activity extends Component {
 			proCalls: false,
 			activity: [],
 			cutActivity: [],
-			currentPage: 1
+			currentPage: 1,
+			loading: false
 		}
 		this.showConsultedMe = this.showConsultedMe.bind(this);
 		this.showConsulted = this.showConsulted.bind(this);
@@ -32,10 +33,12 @@ class Activity extends Component {
 	componentDidMount(){
 		if (this.props.userData.userAuth) {
 			let that = this;
+			this.setState({
+				loading: true
+			})
 			getPersonalCalls(this.props.userData.userAuth).then(function(data) {
 		    that.setState({
 					activity: data,
-					loading: false,
 					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
 				});
 			}).catch(function(error) {
@@ -83,10 +86,12 @@ class Activity extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
 			let that = this;
+			this.setState({
+				loading: true
+			})
 			getPersonalCalls(nextProps.userData.userAuth).then(function(data) {
 		    that.setState({
 					activity: data,
-					loading: false,
 					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
 				});
 			}).catch(function(error) {
@@ -95,6 +100,10 @@ class Activity extends Component {
 						loading: false
 					})
 			});
+		} else {
+			this.setState({
+				loading: false
+			})
 		}
 
 	}
@@ -110,11 +119,12 @@ class Activity extends Component {
 					showConsulted = { this.showConsulted }
 					activity = { this.state.cutActivity }
 					allActivity = { this.state.activity }
-					currentPage = {this.state.currentPage}
+					currentPage = { this.state.currentPage }
 
+					loading = { this.state.loading }
 					changePage = { this.changePage }
 					nextPage = { this.nextPage }
-					previousPage = { this.ppreviousPage }
+					previousPage = { this.previousPage }
 					max = {MAX_ITEMS}
 					proCalls = { this.state.proCalls }/>
 

@@ -1,0 +1,18 @@
+@import './src/style/variables';
+.minutes {
+	border-top: 5px solid $lightRed2;
+	border-bottom: 5px solid $lightRed2;
+	text-align: center;
+  padding: 30px 0 40px;
+	> div {
+		color: $blue;
+		font-weight: bold;
+		font-size: 50px;
+		letter-spacing: -1px;
+		> span {
+			font-size: 125px;
+			letter-spacing: -5px;
+			color: $lightRed2;
+		}
+	}
+}

@@ -31,14 +31,17 @@ export default class Pagination extends Component {
 		}
 	}
 	render({list}) {
-		return (
-			<div className={style.pagination}>
-				<span className={style.prev + ((this.props.currentPage == 1) ? ' ' + style.disabled : '')} onClick={()=>this.props.previousPage()}>Previous</span>
-				{this.state.pages.map((page,index) => (
-						<span onClick={()=>this.props.changePage(index + 1)} className={ this.props.currentPage == index + 1 && style.selected}>{ index + 1}</span>
-				))}
-				<span className={style.next + ((this.props.currentPage == this.state.pages.length) ? ' ' + style.disabled : '')} onClick={()=>this.props.nextPage()}>Next</span>
-			</div>
-		)
+		if (this.state.pages.length > 1) {
+				return (
+					<div className={style.pagination}>
+						<span className={style.prev + ((this.props.currentPage == 1) ? ' ' + style.disabled : '')} onClick={()=>this.props.previousPage()}>Previous</span>
+						{this.state.pages.map((page,index) => (
+								<span onClick={()=>this.props.changePage(index + 1)} className={ this.props.currentPage == index + 1 && style.selected}>{ index + 1}</span>
+						))}
+						<span className={style.next + ((this.props.currentPage == this.state.pages.length) ? ' ' + style.disabled : '')} onClick={()=>this.props.nextPage()}>Next</span>
+					</div>
+				)
+		}
+
 	}
 }

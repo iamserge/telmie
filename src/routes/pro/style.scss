@@ -1,6 +1,11 @@
 
 @import './src/style/variables';
 
+#pro {
+	.spinner {
+		margin-top: 80px;
+	}
+}
 #search {
 	> h2 {
 		margin: 40px 0;

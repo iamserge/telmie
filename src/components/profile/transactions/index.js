@@ -29,12 +29,16 @@ export default class Transactions extends Component {
 						<div>Duration</div>
 						<div>Amout</div>
 					</div>
-					{ transactions.length > 0 && transactions.map(transaction => (
+					{ this.props.loading && (
+						<div className={style.spinnerContainer}><Spinner /></div>
+					)}
+					{ transactions.length > 0 && !this.props.loading  && transactions.map(transaction => (
 						<Transaction key={ transaction.id } transaction={ transaction }/>
 					))}
-					{ transactions.length == 0 && (
+					{ transactions.length == 0 && !this.props.loading && (
 						<div className={style.empty}>No recent transactions</div>
 					)}
+
 				</div>
 			</div>
 		)
