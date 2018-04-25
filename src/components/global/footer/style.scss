@@ -21,3 +21,32 @@
 		width: 140px;
 	}
 }
+@media (max-width: 880px) {
+	#footer {
+		display: block;
+	}
+	#left {
+		text-align: center;
+		display: block;
+		a {
+	    display: inline-block;
+	    width: 100%;
+	    margin: 30px 0 10px;
+		}
+		span {
+	    display: block;
+    	margin: 0 0 20px 0;
+		}
+	}
+}
+#footerLinks {
+  display: block;
+  text-align: center;
+  margin-bottom: 30px;
+	li {
+		display: inline-block;
+		a {
+			height: auto;
+		}
+	}
+}

@@ -15,3 +15,19 @@
 		font-size: 56px
 	}
 }
+@media (max-width: 880px) {
+	.mainTitle {
+		padding: 20px 0;
+    text-align: center;
+		h2 {
+			line-height: 40px;
+	    font-size: 40px;
+	    margin-bottom: 20px;
+
+		}
+		h3 {
+			font-size: 40px;
+    	margin: 25px 0 20px !important;
+		}
+	}
+}

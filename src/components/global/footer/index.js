@@ -6,15 +6,15 @@ export default class Footer extends Component {
 	render() {
 		return (
 			<footer id={style.footer} className='uk-navbar uk-navbar-container'>
-				<div className="uk-navbar-left">
+				<div className="uk-navbar-left" id={style.left}>
 					<Link href="/" id={style.logo}>
 						<img src="/assets/logo.png" alt="Telmie App" />
 					</Link>
 					<span>Copyright &copy;2017 Grandier Developments Ltd, London, UK</span>
 				</div>
-				<div className="uk-navbar-right">
+				<div className="uk-navbar-right"  id={style.right}>
 					<nav>
-						<ul className="uk-navbar-nav">
+						<ul className="uk-navbar-nav" id={style.footerLinks}>
 							<li><Link href="/">Home</Link></li>
 							<li><Link href="/about-us">About us</Link></li>
 							<li><Link href="/faq">FAQ</Link></li>

@@ -98,3 +98,22 @@
 	background-repeat: no-repeat;
   background-position: 10px;
 }
+
+@media (max-width: 880px) {
+	#searchContainer {
+		margin-right: 0;
+    position: absolute;
+    right: 20px;
+		top: 10px;
+	}
+	#searchModal {
+		> div {
+			form {
+				width: 90%;
+				input {
+					font-size: 24px;
+				}
+			}
+		}
+	}
+}

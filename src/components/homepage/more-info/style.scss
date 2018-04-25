@@ -37,3 +37,8 @@
   font-weight: bold;
 	background-color: $lightRed2;
 }
+@media (max-width: 880px) {
+	#mainButton {
+		width: 100%;
+	}
+}

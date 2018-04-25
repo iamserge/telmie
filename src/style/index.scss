@@ -229,9 +229,16 @@ button {
 		  background: rgba(61, 82, 115, 0.36	);
 		  border: none;
 		  height: 100%;
-			
+
 			svg {
 				display: none;
 			}
 	 }
+}
+
+@media (max-width: 880px) {
+	.vimeo {
+		width: auto;
+		height: 300px;
+	}
 }

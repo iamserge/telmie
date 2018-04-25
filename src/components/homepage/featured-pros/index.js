@@ -33,20 +33,13 @@ export default class FeaturedPros extends Component {
 		)
 	}
 	render() {
-		let settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 5,
-      slidesToScroll: 1
-    };
 		return (
 			<div className={style.featuredPros}>
 				<div  className="uk-container uk-container-small uk-container-inner" >
 					<h2>Featured Pros</h2>
 				</div>
 				<div  className="uk-container uk-container-full uk-container-inner" >
-					<Carousel slidesToShow={5} initialSlideHeight ="300" >
+					<Carousel slidesToShow={window.innerWidth > 880 ? 5 : 2} initialSlideHeight ="300" >
 						{ this.props.pros.map(pro => this.renderPro(pro))}
 					</Carousel>
 				</div>

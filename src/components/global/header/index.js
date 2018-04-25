@@ -25,7 +25,8 @@ class Header extends Component {
   constructor(props){
     super(props);
     this.state = {
-      loggedOff: false
+      loggedOff: false,
+      mobileMenuOpened: false
     }
   }
   componentWillReceiveProps(nextProps){
@@ -59,6 +60,12 @@ class Header extends Component {
 		const user = this.props.userData;
 		return (
 			<header id={style.header} className='uk-navbar uk-navbar-container'>
+        <span id={style.expandMobileMenu}  className={this.state.mobileMenuOpened ? style.opened : ''} onClick = { ()=>{this.setState({mobileMenuOpened: !this.state.mobileMenuOpened})}}>
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <div id={style.mobileShadow} className={this.state.mobileMenuOpened ? style.opened : ''}></div>
 				<div className="uk-navbar-left">
           { this.state.loggedOff && (
             <Redirect to='/' />
@@ -111,6 +118,27 @@ class Header extends Component {
 						</div>
 					)}
 				</div>
+
+        <div id={style.mobileNav} className={this.state.mobileMenuOpened ? style.opened : ''}>
+          <Link href="/">Home</Link>
+          <Link href="/about-us">About us</Link>
+          <Link href="/help">FAQ</Link>
+          { (Object.keys(user).length === 0)  ? (
+					  <div>
+              <h3>My account</h3>
+              <Link href="/sign-up" id={style.signUp}>Sign up</Link>
+              <Link href="/log-in">Login</Link>
+            </div>
+					) : (
+            <div>
+              <Link href="/profile">My Account</Link>
+							<Link href="/activity">Activity</Link>
+							<Link href="/transactions">Transactions</Link>
+							<Link href="/edit-profile">Edit Profile</Link>
+            </div>
+					)}
+
+        </div>
 
 
 			</header>

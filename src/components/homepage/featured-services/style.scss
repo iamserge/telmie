@@ -27,3 +27,28 @@
 		width: 35%;
 	}
 }
+
+@media (max-width: 880px) {
+	.featuredServices {
+		h2 {
+			font-size: 30px;
+			text-align: center;
+		}
+	}
+	.service {
+		padding: 10px;
+		display: block;
+		text-align: center;
+		font-size: 16px;
+		.left {
+			text-align: center;
+			width: 100%;
+			border: none;
+			padding: 0;
+			line-height: normal;
+			font-size: 20px;
+			margin: 10px 0 10px;
+		}
+	}
+
+}
