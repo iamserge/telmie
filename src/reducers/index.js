@@ -25,7 +25,8 @@ const rootReducer = combineReducers({
 	loggedInUserActivity: user.activity,
 	loggedInUserTransactions: user.transactions,
 	registerSuccess: user.registerSuccess,
-	registerFailure: user.registerFailure
+	registerFailure: user.registerFailure,
+	shortlistPros: user.shortlistPros
 
 });
 

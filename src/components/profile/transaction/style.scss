@@ -4,10 +4,23 @@
 	margin: 10px 0;
 	padding: 10px 0;
 	font-size: 14px;
-	
+
 	> div {
 		flex-grow: 1;
 		width: 15%;
+		&.money {
+			width: 30%;
+			> span {
+				display: block;
+				padding-right: 28px;
+			}
+			.in {
+				text-align: left;
+			}
+			.out {
+				text-align: right;
+			}
+		}
 	}
 	.type {
     width: 8%;
@@ -22,6 +35,7 @@
 	}
 	.contact {
 		width: 55%;
+		cursor: pointer;
 		h3 {
 			display: inline-block;
 			font-size: 16px;
@@ -74,4 +88,9 @@
 	width: 80%;
 	float: right;
 
+}
+.fee {
+  display: block;
+  font-size: 12px;
+  opacity: 0.5;
 }

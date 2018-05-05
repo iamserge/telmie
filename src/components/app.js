@@ -14,7 +14,7 @@ import Profile from '../routes/profile';
 import Activity from '../routes/activity';
 import EditProfile from '../routes/edit-profile';
 import AllTransactions from '../routes/transactions';
-
+import Shortlist from '../routes/shortlist';
 import PrismicConfig from '../prismic/prismic-configuration';
 import { uids } from '../prismic/uids';
 import Prismic from 'prismic-javascript';
@@ -31,7 +31,9 @@ export const routes = {
 	SIGN_UP: '/sign-up',
 	LOG_IN: '/log-in',
 	PROFILE: '/profile',
-	ACTIVITY: '/activity',
+	MY_PROS: '/my-pros',
+	MY_CLIENTS: '/my-clients',
+	MY_SHORTLIST: '/my-shortlist',
 	TRANSACTIONS: '/transactions',
 	EDIT_PROFILE: '/edit-profile'
 };
@@ -77,8 +79,10 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Search path={routes.SEARCH} />
 					<Pro path={routes.PRO} />
-					<Activity path={routes.ACTIVITY} />
-
+					<Activity path={routes.MY_PROS} isProCalls = { false } />
+					<Activity path={routes.MY_CLIENTS} isProCalls = { true } />
+					<Shortlist path={routes.MY_SHORTLIST} />
+					
 					<AllTransactions path={routes.TRANSACTIONS} />
 					<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />
 					<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>

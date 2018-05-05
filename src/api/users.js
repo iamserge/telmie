@@ -18,11 +18,11 @@ export function logIn(authData){
 	});
 }
 
-export function getProCalls(authData, pageNumber){
+export function getCalls(authData, isProCalls){
 	let headers = new Headers();
 	headers.append("Authorization", "Basic " + authData);
 
-	return fetch(apiUrls.GET_PRO_CALLS + pageNumber, { method: 'GET', headers: headers}).then(response => {
+	return fetch(isProCalls ? apiUrls.GET_PRO_CALLS : apiUrls.GET_PERSONAL_CALLS, { method: 'GET', headers: headers}).then(response => {
     if (response.status === 401){
 			return {};
 		}
@@ -35,22 +35,6 @@ export function getProCalls(authData, pageNumber){
 	});
 }
 
-export function getPersonalCalls(authData, pageNumber){
-	let headers = new Headers();
-	headers.append("Authorization", "Basic " + authData);
-
-	return fetch(apiUrls.GET_PERSONAL_CALLS + pageNumber, { method: 'GET', headers: headers}).then(response => {
-    if (response.status === 401){
-			return {};
-		}
-		return response.json().then(json => {
-			return json;
-		});
-
-	}, error => {
-		throw new Error(error.message);
-	});
-}
 
 
 export function getTransactions(authData, pageNumber){
@@ -90,6 +74,24 @@ export function editDetails(data){
 
 
 
+export function verify(data){
+
+	return fetch(apiUrls.VERIFY_USER + '?token=' + data.token, { method: 'GET' }).then(response => {
+    if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
+			return {};
+		}
+		return response.json().then(json => {
+			return {authData: window.btoa(data.email + ':' + data.password)};
+		}, error => {
+			throw new Error(error.message);
+		});
+
+	}, error => {
+		throw new Error(error.message);
+	});
+}
+
+
 export function register(data){
 
 	let headers = new Headers();
@@ -99,8 +101,11 @@ export function register(data){
     if (response.status === 401 || response.status === 400 || response.status === 415 || response.status === 500){
 			return {};
 		}
-		return response.json().then(json => {
-			return {authData: window.btoa(data.email + ':' + data.password)};
+		return response.text().then(text => {
+			return {registration: 'success'}
+			//return {authData: window.btoa(data.email + ':' + data.password)};
+		}, error => {
+			throw new Error(error.message);
 		});
 
 	}, error => {

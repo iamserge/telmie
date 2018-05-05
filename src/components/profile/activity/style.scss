@@ -1,10 +1,10 @@
 @import './src/style/variables';
 .activity {
-	display: flex;
 	margin: 10px 0;
 	padding: 10px 0;
 	font-size: 14px;
 	> div {
+		display: inline-block;
 		flex-grow: 1;
 		width: 15%;
 	}
@@ -20,7 +20,8 @@
 		}
 	}
 	.contact {
-		width: 55%;
+		width: 35%;
+		cursor: pointer;
 		h3 {
 			display: inline-block;
 			font-size: 16px;
@@ -72,5 +73,50 @@
 	display: inline-block;
 	width: 80%;
 	float: right;
+
+}
+
+.relatedActivities {
+	width: 100% !important;
+	text-align: right;
+	position: relative;
+	top: -10px;
+	&.expanded {
+
+		.container {
+			max-height: 1000px;
+		}
+		.relatedTitle {
+			span {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	.relatedTitle {
+    width: 53%;
+    text-align: center;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+    text-decoration: underline;
+    cursor: pointer;
+	}
+	.container {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height .3s;
+	}
+	.related {
+		margin-bottom: 10px;
+		> div {
+			display: inline-block;
+			width: 15%;
+			text-align: left;
+			&.relatedDate {
+				width: 20%;
+			}
+		}
+	}
 
 }

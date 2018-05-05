@@ -1,5 +1,6 @@
 import { actionTypes } from '../actions';
-import { concat, orderBy, map, without } from 'lodash';
+import { concat, orderBy, map, without, uniqBy } from 'lodash';
+
 
 
 export const loggedInUser = (state = {}, action) => {
@@ -132,6 +133,25 @@ export const transactions = (state = [], action) => {
 		case actionTypes.TRANSACTIONS_RECEIVED:
 			let transactions = orderBy(action.transactions, 'date', 'desc');
 			return transactions;
+
+		default:
+			return state;
+	}
+};
+
+
+export const shortlistPros = (state = [], action) => {
+	switch (action.type) {
+
+		case actionTypes.SHORTLIST_RECEIVED:
+			let shortlist = map(action.shortlist, (entry) => {
+				if (entry.status == 'SHORTLIST') return entry.contact;
+			});
+			shortlist = without(shortlist, undefined);
+			shortlist = uniqBy(shortlist, (pro)=> {
+				return pro.id;
+			})
+			return shortlist;
 
 		default:
 			return state;

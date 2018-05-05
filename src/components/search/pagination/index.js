@@ -14,17 +14,12 @@ export default class Pagination extends Component {
 		})
 	}
 
+
 	render() {
 		return (
 			<div id={style.pagination}>
-				<a href="#" id={style.first}>First</a>
-				<div id={style.pages}>
-					<a href="#">Previous</a>
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<a href="#">Next</a>
-				</div>
-				<a href="#"  id={style.last}>Last</a>
+				<a href="#" id={style.previous} className={this.props.page == 1 && style.disabled} onClick = {()=> {this.props.pageChange(this.props.page - 1)}}>Previous</a>
+				<a href="#" id={style.next} className={this.props.noNext && style.disabled} onClick = {()=> {this.props.pageChange(this.props.page + 1)}}>Next</a>
 
 			</div>
 		)

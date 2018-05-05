@@ -10,7 +10,7 @@ html, body {
 	margin: 0;
 	font-family: 'Roboto', arial, sans-serif;
 	font-weight: 400;
-	color: #323232;
+	color: #5C636E;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -240,5 +240,8 @@ button {
 	.vimeo {
 		width: auto;
 		height: 300px;
+	}
+	.mobile-hide {
+		display: none !important;
 	}
 }

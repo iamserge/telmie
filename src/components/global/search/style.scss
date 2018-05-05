@@ -101,10 +101,8 @@
 
 @media (max-width: 880px) {
 	#searchContainer {
-		margin-right: 0;
-    position: absolute;
-    right: 20px;
-		top: 10px;
+		position: absolute;
+		right: -20px;	
 	}
 	#searchModal {
 		> div {

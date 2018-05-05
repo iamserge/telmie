@@ -8,6 +8,8 @@
 		> li {
 			> a {
 				text-transform: none;
+				font-size: 1rem;
+				color: #5C636E;
 			}
 		}
 	}
@@ -169,6 +171,7 @@
 	}
 	#mobileShadow {
 		display: block;
+    z-index: 1000;
 	}
 	#signUp {
 	    border-top: 1px solid #f7f7f7;
@@ -187,6 +190,7 @@
   	top: 62px;
 		transition: transform .2s;
 		transform: translate(-100%, 0);
+		z-index: 1000;
 		h3 {
 	    text-align: center;
 	    font-size: 18px;

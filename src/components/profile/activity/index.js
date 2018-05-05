@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
-import { Link } from 'preact-router';
+import { Link, route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import { apiRoot } from '../../../api';
 const convertDate = (date) => {
@@ -22,19 +22,18 @@ const convertDuration = (totalSeconds) => {
 
 }
 export default class Activity extends Component {
-
+	state = {
+		expanded: false
+	}
+	goToPro(id){
+		route('/pro/' + id);
+	}
 	render({activity}) {
 		const contact = activity.contact;
 		return (
 			<div className={style.activity}>
-				<div className={style.type}>
-					{(activity.type == 'PRO') ? (
-						<span aria-hidden="true" class="fa fa-arrow-right" title="You contacted"></span>
-					) : (
-						<span aria-hidden="true" class="fa fa-arrow-left" title="Contacted you"></span>
-					)}
-				</div>
-				<div className={style.contact}>
+
+				<div className={style.contact}  onClick={()=>{this.goToPro(contact.id)}} >
 					<div className={style.avatar}>
 						{(contact.avatar != null) ? (
 							<img src={apiRoot + 'image/' + contact.avatar.id} alt={contact.name + ' ' + contact.lastName} />
@@ -44,16 +43,20 @@ export default class Activity extends Component {
 					</div>
 					<div className={style.info}>
 						<h3>{contact.name + ' ' + contact.lastName}</h3>
-
-							{contact.pro != null && (
+							{this.props.client && (
 								<div>
-									{contact.pro.profession} <span className={style.profession}>{contact.pro.category}</span>
+									CLIENT
+								</div>
+							)}
+							{!this.props.client && contact.pro != null && (
+								<div>
+									{contact.pro.profession}
 								</div>
 							)}
 					</div>
 				</div>
 				<div className={style.date}> { convertDate(activity.date) }</div>
-				<div>
+				<div className={style.duration}>
 					{activity.duration != null ? (
 						<span>
 							{convertDuration(activity.duration)}
@@ -62,7 +65,7 @@ export default class Activity extends Component {
 						<span>00:00</span>
 					)}
 				</div>
-				<div>
+				<div className={style.price}>
 					{activity.amount != null ? (
 						<span>
 							£{activity.amount.toFixed(2)}
@@ -74,6 +77,43 @@ export default class Activity extends Component {
 					)}
 				</div>
 				<div>{activity.status}</div>
+				{ typeof activity.related != 'undefined' && (
+					<div className={this.state.expanded ? style.relatedActivities + ' ' + style.expanded : style.relatedActivities }>
+						<span className={style.relatedTitle} onClick={()=>{this.setState({expanded: !this.state.expanded})}}>
+							{activity.related.length} more {activity.related.length == 1 ? 'call' : 'calls' } <span aria-hidden="true" class="fa fa-angle-down"></span>
+						</span>
+						<div className={style.container}>
+							{ activity.related.map(related => (
+							<div className={style.related}>
+								<div className={style.relatedDate}> { convertDate(related.date) }</div>
+								<div className={style.relatedDuration}>
+									{related.duration != null ? (
+										<span>
+											{convertDuration(related.duration)}
+										</span>
+									) : (
+										<span>00:00</span>
+									)}
+								</div>
+								<div className={style.relatedPrice}>
+									{related.amount != null ? (
+										<span>
+											£{related.amount.toFixed(2)}
+										</span>
+									) : (
+										<span>
+											£0.00
+										</span>
+									)}
+								</div>
+								<div className={style.relatedStatus}>
+									{related.status}
+								</div>
+							</div>
+						))}
+						</div>
+					</div>
+				)}
 			</div>
 		)
 	}

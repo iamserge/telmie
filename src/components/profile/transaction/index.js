@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
 import Spinner from '../../global/spinner';
-import { Link } from 'preact-router';
+import { Link, route } from 'preact-router';
 import FontAwesome from 'react-fontawesome';
 import { apiRoot } from '../../../api';
 const convertDate = (date) => {
@@ -22,12 +22,14 @@ const convertDuration = (totalSeconds) => {
 
 }
 export default class transaction extends Component {
-
+	goToPro(id){
+		route('/pro/' + id);
+	}
 	render({transaction}) {
 		const contact = transaction.contact;
 		return (
 			<div className={style.transaction + ' ' + ( transaction.moneyCame > 0 && style.profit )}>
-				<div className={style.contact}>
+				<div className={style.contact}  onClick={()=>{this.goToPro(contact.id)}} >
 					<div className={style.avatar}>
 						{(contact.avatar != null) ? (
 							<img src={apiRoot + 'image/' + contact.avatar.id} alt={contact.name + ' ' + contact.lastName} />
@@ -38,7 +40,11 @@ export default class transaction extends Component {
 					<div className={style.info}>
 						<h3>{contact.name + ' ' + contact.lastName}</h3>
 
-							{contact.pro != null && (
+							{transaction.moneyCame > 0 ? (
+								<div>
+									CLIENT
+								</div>
+							): (
 								<div>
 									{contact.pro.profession} <span className={style.profession}>{contact.pro.category}</span>
 								</div>
@@ -55,12 +61,22 @@ export default class transaction extends Component {
 						<span>00:00</span>
 					)}
 				</div>
-				<div>
-					<span>
+				<div className={style.money}>
+					<span className={transaction.moneyCame > 0 ? style.in : style.out}>
 						{ transaction.moneyCame > 0 ? (
-							<span>
-						 		+&pound;{transaction.moneyCame.toFixed(2)}
-							</span>
+
+								transaction.fee > 0 ? (
+									<span>
+								 		+&pound;{parseFloat(transaction.moneyCame - transaction.fee).toFixed(2)}
+										<span className={style.fee}>&pound;{transaction.moneyCame.toFixed(2)} - &pound;{transaction.fee.toFixed(2)} Telmie fee</span>
+									</span>
+								) : (
+									<span>
+								 		+&pound;{transaction.moneyCame.toFixed(2)}
+									</span>
+								)
+
+
 						) : (
 							<span>
 							 -&pound;{transaction.moneyGone.toFixed(2)}

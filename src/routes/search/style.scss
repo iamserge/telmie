@@ -35,3 +35,10 @@
 #searchContainer {
 
 }
+@media (max-width: 880px) {
+	#search {
+		> h2 {
+			font-size: 30px !important;
+		}
+	}
+}

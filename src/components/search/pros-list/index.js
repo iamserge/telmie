@@ -6,7 +6,7 @@ import Pro from '../pro';
 export default class ProsList extends Component {
 	render({pros}) {
 		return (
-			<div id={style.prosList}>
+			<div id={style.prosList} className={this.props.full && style.full}>
 				{ pros.map(pro => (
 					<Pro key={ pro.id } person={ pro }/>
 				))}

@@ -87,7 +87,7 @@ class AllTransactions extends Component {
 		const user = this.props.userData;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
-				<h1>All transactions</h1>
+				<h1>Money</h1>
 				<Transactions transactions = { this.state.cutTransactions } loading = { this.state.loading }/>
 				<Pagination
 					list = { this.props.transactions }

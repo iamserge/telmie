@@ -8,4 +8,6 @@ export const apiUrls = {
   GET_PRO_CALLS: apiRoot + 'calls?isConsultant=true&size=9999&page=',
   GET_PERSONAL_CALLS: apiRoot + 'calls?isConsultant=false&size=9999&page=',
   GET_TRANSACTIONS: apiRoot + 'cards/history',
+  VERIFY_USER: apiRoot + 'users/signup',
+  ADD_TO_SHORTLIST: apiRoot + 'calls/shortlist'
 }

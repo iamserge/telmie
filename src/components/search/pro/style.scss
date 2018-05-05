@@ -90,3 +90,41 @@
 		color: $grey;
 	}
 }
+
+@media (max-width: 880px) {
+	.image {
+		 width: 75px;
+		 &:after {
+			 width: 75px;
+			 height: 75px;
+			 background-size: 100%;
+		 }
+		 img {
+			 width: 73px;
+			 height: 73px;
+		 }
+	}
+	.price {
+		width: 40%;
+		position: relative;
+    top: -20px;
+	}
+	.info {
+		overflow: visible !important;
+		.raiting {
+			left: -95px;
+		  text-align: center;
+		  bottom: -32px;
+			> span {
+				display: block;
+			}
+			> div {
+				top: -5px;
+				margin: 0;
+				> span {
+					font-size: 18px !important;
+				}
+			}
+		}
+	}
+}

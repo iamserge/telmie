@@ -27,7 +27,8 @@ export default class Transactions extends Component {
 						<div className={style.contact}>Contact</div>
 						<div className={style.date}>Date</div>
 						<div>Duration</div>
-						<div>Amout</div>
+						<div>Money In</div>
+						<div>Money Out</div>
 					</div>
 					{ this.props.loading && (
 						<div className={style.spinnerContainer}><Spinner /></div>

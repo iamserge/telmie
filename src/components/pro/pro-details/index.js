@@ -10,9 +10,15 @@ import YouTube from 'react-youtube';
 export default class Pro extends Component {
 
 	render({person}) {
-		const youtubeOptions = {
+		let youtubeOptions = {
 			width: '1200',
 			height: '600'
+		}
+		if (window.innerWidth < 880) {
+		 	youtubeOptions = {
+				width: '100%',
+				height: '300px'
+			}
 		}
 		return (
 			<div class={style.person}>
@@ -24,11 +30,20 @@ export default class Pro extends Component {
 							<img src="/assets/nouserimage.jpg" alt={person.name + ' ' + person.lastName} />
 						)}
 					</div>
-					<button  id={style.callPro} className="uk-button">Call pro</button>
+					<span className={style.note}>In order to call pro, please download our <a target="_blank" href="https://itunes.apple.com/us/app/telmie/id1345950689">iOS app</a></span>
+					{this.props.shortlisted ? (
+						<span className={style.success}><span aria-hidden="true" class="fa fa-check"></span> Added</span>
+					) : (
+						<button  id={style.callPro} className="uk-button" onClick={() => {this.props.addToShortlist(person.id)}}>Shortlist</button>
+					)}
+
 				</div>
 				<div className={style.info}>
-					<h2>{person.name} {person.lastName}</h2>
-					<h3>{person.pro.profession}</h3>
+					<div className={style.nameAndTitle}>
+						<span className={style.proRoundel}>PRO</span>
+						<h2>{person.name} {person.lastName}</h2>
+						<h3>{person.pro.profession}</h3>
+					</div>
 					<div className={style.prof}>
 						<div>{person.pro.category}</div>
 						<FontAwesome name="angle-right"/>

@@ -1,6 +1,6 @@
 @import './src/style/variables';
 .activityList {
-	margin-top: 10px;
+	margin-top: 40px;
 	h2 {
 		a {
 			float: right;
@@ -50,14 +50,14 @@
 	display: flex;
 	font-weight: bold;
 	> div {
-		flex-grow: 1;
+		display: inline-block;
 		width: 15%;
 	}
 	.type {
 		width: 8%;
 	}
 	.contact {
-		width: 55%;
+		width: 35%;
 	}
 	.date {
 		width: 20%;

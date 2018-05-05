@@ -3,6 +3,7 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { getProDetails } from '../../api/pros';
+import { addToShortlist } from '../../api/pros'
 import style from './style.scss';
 import ProDetails from '../../components/pro/pro-details';
 import Spinner from '../../components/global/spinner';
@@ -12,21 +13,36 @@ class Search extends Component {
 		super(props);
 		this.state = {
 			pro: {},
-			loading: false
+			loading: false,
+			shortlisted: false
 		}
+		this.shortlist = this.shortlist.bind(this);
 	}
 
 	componentDidMount(){
 		const that = this;
-
+		window.scrollTo(0,0);
 		getProDetails(this.props.userId)
 	  .then(function(data) {
 	    that.setState({ pro: data, loading: false });
 		});
 	}
+
 	componentWillReceiveProps(nextProps){
 
 	}
+
+	shortlist(userId){
+		let that = this;
+		addToShortlist(userId, this.props.userData.userAuth).then(function(data) {
+			that.setState({
+				shortlisted: true
+			})
+		}).catch(function(error) {
+
+		});
+	}
+
 	render() {
 
 		return (
@@ -37,7 +53,7 @@ class Search extends Component {
 				{(Object.keys(this.state.pro).length === 0 || this.state.loading) ? (
 					<Spinner />
 				) : (
-					<ProDetails person = { this.state.pro } />
+					<ProDetails person = { this.state.pro } addToShortlist = { this.shortlist } shortlisted = { this.state.shortlisted } />
 				)}
 
 			</div>
@@ -46,7 +62,9 @@ class Search extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+	userData: state.loggedInUser
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 

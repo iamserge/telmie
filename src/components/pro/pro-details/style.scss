@@ -14,6 +14,12 @@
 	width: 300px;
 	position: relative;
 }
+.success {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}
 .image {
 	width: 300px;
 	position: relative;
@@ -33,7 +39,25 @@
     width: 290px;
     height: 291px;
     object-fit: cover;
+		    position: relative;
+    top: 2px;
+    left: 1px;
 	}
+}
+.proRoundel {
+	display: block;
+  width: 70px;
+  height: 70px;
+  background-color: $red;
+  border-radius: 100%;
+  text-align: center;
+  color: white;
+  line-height: 70px;
+  font-weight: bold;
+  font-size: 22px;
+  position: absolute;
+  left: 0;
+  top: 4px;
 }
 #callPro {
 	width: 100%;
@@ -75,7 +99,18 @@
 	}
 
 }
-
+.note {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: $red;
+  font-weight: bold;
+  font-size: 18px;
+	a {
+		color: $red;
+		text-decoration: underline;
+	}
+}
 .priceContainer {
 	width: 20%;
 	float: right;
@@ -115,4 +150,45 @@
 
 .videoContainer {
 	margin-top: 100px;
+}
+.nameAndTitle {
+	position: relative;
+	padding-left: 88px;
+}
+@media (max-width: 880px) {
+	.person {
+		text-align: center;
+		padding-top: 80px;
+		margin-top: 20px;
+		position: relative;
+	}
+	.image {
+
+	}
+	.info {
+		width: 100%;
+		position: static;
+		margin: 40px 0 0 0;
+		h2 {
+			font-size: 30px;
+			margin-top: 0;
+		}
+		h3 {
+			font-size: 20px;
+		}
+	}
+	.nameAndTitle {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+		padding:0;
+	}
+	.priceContainer {
+		width: 100%;
+		float: none;
+	}
+	.proRoundel {
+		display: none;
+	}
 }

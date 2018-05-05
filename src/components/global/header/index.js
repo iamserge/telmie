@@ -91,7 +91,7 @@ class Header extends Component {
 						</nav>
 					) : (
 						<div className={style.loggedInContainer}>
-							<div className={style.greeting}>
+							<div className="mobile-hide">
 								{ user.name } { user.lastName }
 							</div>
 							<FontAwesome name='caret-down' />
@@ -104,11 +104,15 @@ class Header extends Component {
 								)}
 
 							</div>
-							<div className={style.dropdown + ' uk-dropdown'}>
+							<div className={style.dropdown + ' uk-dropdown mobile-hide'}>
 							    <ul className="uk-nav uk-dropdown-nav">
 							        <li><Link href="/profile">My Account</Link></li>
-											<li><Link href="/activity">Activity</Link></li>
-											<li><Link href="/transactions">Transactions</Link></li>
+											<li><Link href="/my-pros">My Pros</Link></li>
+                      {(user.pro != null) && (
+                          <li><Link href="/my-clients">My Clients</Link></li>
+                      )}
+                      <li><Link href="/my-shortlist">My Shortlist</Link></li>
+											<li><Link href="/transactions">Money</Link></li>
 											<li><Link href="/edit-profile">Edit Profile</Link></li>
 							        <li className="uk-nav-divider"></li>
 							        <li><a onClick={()=>this.logOff()}>Log out</a></li>
@@ -132,9 +136,14 @@ class Header extends Component {
 					) : (
             <div>
               <Link href="/profile">My Account</Link>
-							<Link href="/activity">Activity</Link>
-							<Link href="/transactions">Transactions</Link>
+              <li><Link href="/my-pros">My Pros</Link></li>
+              {(user.pro != null) && (
+                  <li><Link href="/my-clients">My Clients</Link></li>
+              )}
+              <li><Link href="/my-shortlist">My Shortlist</Link></li>
+							<Link href="/transactions">Money</Link>
 							<Link href="/edit-profile">Edit Profile</Link>
+              <a onClick={()=>this.logOff()}>Log out</a>
             </div>
 					)}
 

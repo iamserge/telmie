@@ -7,21 +7,22 @@ export default class SideBar extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			switched: 'hourly'
+			switched: 'rate'
 		}
 		this.toggleSwitch = this.toggleSwitch.bind(this);
 	}
 	toggleSwitch(switchName){
 		this.setState({
 			switched: switchName
-		})
+		});
+		this.props.sortToggleSwitched(switchName);
 	}
 	render() {
 		return (
 			<div id={style.sideBar}>
 				<h3>Arrange by:</h3>
 				<div class="switchContainer">
-					<Switch onClick={()=>this.toggleSwitch('hourly')} on={this.state.switched == 'hourly'}/>
+					<Switch onClick={()=>this.toggleSwitch('rate')} on={this.state.switched == 'rate'}/>
 					<span>Hourly rate</span>
 				</div>
 				<div class="switchContainer">

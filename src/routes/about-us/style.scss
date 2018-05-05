@@ -23,3 +23,15 @@
 		}
 	}
 }
+
+@media (max-width: 880px) {
+	#mainTitle {
+		font-size: 30px;
+	}
+	.accent {
+		text-align: center;
+		> p {
+			padding: 20px;
+		}
+	}
+}

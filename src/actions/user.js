@@ -53,6 +53,11 @@ const proCallsReceived = (response) => ({
 	calls: response
 });
 
+const shortlistReceived = (response) => ({
+	type: actionTypes.SHORTLIST_RECEIVED,
+	shortlist: response
+});
+
 
 const personalCallsReceived = (response) => ({
 	type: actionTypes.PERSONAL_CALLS_RECEIVED,
@@ -86,7 +91,7 @@ export const register = (data) => async (dispatch) => {
 		dispatch(registerFailure());
 	} else {
 		dispatch(registerSuccess(response));
-		dispatch(logIn(response.authData));
+		//dispatch(logIn(response.authData));
 	}
 };
 
@@ -101,10 +106,17 @@ export const editDetails = (data) => async (dispatch) => {
 	}
 };
 
-
+export const getShortlist = (authData) => async (dispatch) => {
+	const response = await user.getCalls(authData, false);
+	if (Object.keys(response).length === 0) {
+		dispatch(authFailure());
+	} else {
+		dispatch(shortlistReceived(response));
+	}
+};
 
 export const getProCalls = (authData) => async (dispatch) => {
-	const response = await user.getProCalls(authData);
+	const response = await user.getCalls(authData, true);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {
@@ -113,7 +125,7 @@ export const getProCalls = (authData) => async (dispatch) => {
 };
 
 export const getPersonalCalls = (authData) => async (dispatch) => {
-	const response = await user.getPersonalCalls(authData);
+	const response = await user.getCalls(authData, false);
 	if (Object.keys(response).length === 0) {
 		dispatch(authFailure());
 	} else {

@@ -2,13 +2,13 @@ import { h, Component } from 'preact';
 import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
-import { getProCalls, getPersonalCalls} from '../../api/users'
+import { getCalls } from '../../api/users'
 import style from './style.scss';
 import { logIn } from '../../actions/user';
 import { route } from 'preact-router';
 import AllActivity from '../../components/profile/all-activity';
 import Spinner from '../../components/global/spinner';
-
+import { processActivities } from '../../utils';
 const MAX_ITEMS = 10;
 
 
@@ -17,11 +17,12 @@ class Activity extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			proCalls: false,
+			proCalls: [],
+			isProCalls: this.props.isProCalls,
 			activity: [],
 			cutActivity: [],
 			currentPage: 1,
-			loading: false
+			loading: false,
 		}
 		this.showConsultedMe = this.showConsultedMe.bind(this);
 		this.showConsulted = this.showConsulted.bind(this);
@@ -36,9 +37,10 @@ class Activity extends Component {
 			this.setState({
 				loading: true
 			})
-			getPersonalCalls(this.props.userData.userAuth).then(function(data) {
+			getCalls(this.props.userData.userAuth, this.state.isProCalls).then(function(data) {
+				let processed = processActivities(data);
 		    that.setState({
-					activity: data,
+					activity: processed,
 					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
 				});
 			}).catch(function(error) {
@@ -84,14 +86,13 @@ class Activity extends Component {
 		})
 	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.userData.userAuth != this.props.userData.userAuth) {
+		if (nextProps.userData.userAuth != this.props.userData.userAuth || this.props.isProCalls != nextProps.isProCalls) {
 			let that = this;
-			this.setState({
-				loading: true
-			})
-			getPersonalCalls(nextProps.userData.userAuth).then(function(data) {
+
+			getCalls(nextProps.userData.userAuth, nextProps.isProCalls).then(function(data) {
+				let processed = processActivities(data);
 		    that.setState({
-					activity: data,
+					activity: processed,
 					cutActivity: data.slice( (that.state.currentPage - 1) * MAX_ITEMS,  that.state.currentPage * MAX_ITEMS)
 				});
 			}).catch(function(error) {
@@ -105,14 +106,13 @@ class Activity extends Component {
 				loading: false
 			})
 		}
-
 	}
 	render() {
 		const user = this.props.userData;
 		return (
 			<div id="profile" className="uk-container uk-container-small" >
 				<h1>
-					All activity
+					 { this.props.isProCalls ? "My Clients" : "My Pros"}
 				</h1>
 				<AllActivity
 					showConsultedMe = { this.showConsultedMe }
@@ -120,7 +120,7 @@ class Activity extends Component {
 					activity = { this.state.cutActivity }
 					allActivity = { this.state.activity }
 					currentPage = { this.state.currentPage }
-
+					client = {this.props.isProCalls}
 					loading = { this.state.loading }
 					changePage = { this.changePage }
 					nextPage = { this.nextPage }
@@ -141,8 +141,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	getProCalls,
-	getPersonalCalls
+	getCalls
+
 }, dispatch);
 
 export default connect(

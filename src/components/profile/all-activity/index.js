@@ -10,13 +10,8 @@ export default class AllActivity extends Component {
 	render({activity}) {
 		return (
 			<div className={style.activityList}>
-				<div className={style.activityHeader}>
-					<button onClick={()=>{this.props.showConsulted()}} className={ !this.props.proCalls && style.selected }>I consulted</button>
-					<button onClick={()=>{this.props.showConsultedMe()}} className={ this.props.proCalls && style.selected }>Consulted me</button>
-				</div>
 				<div className={style.inner}>
 					<div className={style.header}>
-						<div className={style.type}>Type</div>
 						<div className={style.contact}>Contact</div>
 						<div className={style.date}>Date</div>
 						<div>Duration</div>
@@ -24,7 +19,7 @@ export default class AllActivity extends Component {
 						<div>Status</div>
 					</div>
 					{ activity.length > 0 && activity.map(activity => (
-						<Activity key={ activity.id } activity={ activity }/>
+						<Activity key={ activity.id } activity={ activity } client = {this.props.client}/>
 					))}
 					{ activity.length == 0 && !this.props.loading && (
 						<div className={style.empty}>No recent activity</div>

@@ -23,7 +23,7 @@ export default class ActivityList extends Component {
 						<div>Status</div>
 					</div>
 					{ recentActivity.length > 0 && recentActivity.map(activity => (
-						<Activity key={ activity.id } activity={ activity }/>
+						<Activity key={ activity.id } activity={ activity }  client = {this.props.client}/>
 					))}
 					{ recentActivity.length == 0 && (
 						<div className={style.empty}>No recent activity</div>

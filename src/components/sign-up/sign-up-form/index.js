@@ -225,7 +225,9 @@ export default class SignUpForm extends Component {
 				return (
 					<div className={style.signUpForm}>
 						<div className={style.success}>
-							Thank you <span> {this.state.firstName} </span> for registering, please check your email for verefication
+							<h3>Thank you for Telmie registration!</h3>
+							<p>Check your e-mail and click a link in Telmie letter to verify your account. After verification you'll be free to use Telmie App and web-page.</p>
+
 						</div>
 					</div>
 				)

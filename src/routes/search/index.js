@@ -3,6 +3,8 @@ import Helmet from 'preact-helmet';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { getPros } from '../../api/pros';
+import { consts } from '../../utils/consts';
+
 import style from './style.scss';
 import ProList from '../../components/search/pros-list';
 import SideBar from '../../components/search/sidebar';
@@ -14,13 +16,23 @@ class Search extends Component {
 		this.state = {
 			pros: [],
 			searchTerm: this.props.searchTerm || '',
-			loading: true
+			loading: true,
+			sortBy: 'rate',
+			page: 1
 		}
+		this.sortToggleSwitched = this.sortToggleSwitched.bind(this);
+		this.pageChange = this.pageChange.bind(this);
 	}
 
 	componentDidMount(){
 		const that = this;
-		getPros(this.props.searchTerm).then(function(data) {
+		this.fetchPros(this.state.searchTerm, this.state.sortBy, this.state.page);
+	}
+
+
+	fetchPros(searchTerm, sortBy, page){
+		let that = this;
+		getPros(searchTerm, sortBy, page).then(function(data) {
 	    that.setState({
 				pros: data,
 				searchTerm: that.props.searchTerm,
@@ -34,26 +46,31 @@ class Search extends Component {
 				})
 		});
 	}
+
+
 	componentWillReceiveProps(nextProps){
 		if (nextProps.searchTerm != this.state.searchTerm) {
 			const that = this;
 			that.setState({pros: []});
-
-			getPros(nextProps.searchTerm).then(function(data) {
-		    that.setState({
-					pros: data,
-					searchTerm: nextProps.searchTerm,
-					loading: false
-				})
-			}).catch(function(error) {
-					that.setState({
-						pros: [],
-						searchTerm: nextProps.searchTerm,
-						loading: false
-					})
-			});
+			this.fetchPros(nextProps.searchTerm, this.state.sortBy, this.state.page);
 		}
 	}
+
+	sortToggleSwitched(sortBy){
+		this.setState({
+			sortBy: sortBy
+		});
+		this.fetchPros(this.state.searchTerm, sortBy, this.state.page);
+	}
+
+	pageChange(page){
+		this.setState({
+			page: page
+		});
+		this.fetchPros(this.state.searchTerm, this.state.sortBy, page);
+	}
+
+
 	render() {
 
 		return (
@@ -61,9 +78,9 @@ class Search extends Component {
 				<Helmet
 					title="Telmie | Search"
 				/>
-				<h2>Results for: <span>{this.props.searchTerm} </span><span className="count">{this.state.pros.length} {(this.state.pros.length == 1) ? 'pro' : 'pros'} found</span> </h2>
+				<h2>Results for: <span>{this.props.searchTerm} </span></h2>
 				<div id="searchContainer">
-					<SideBar />
+					<SideBar sortToggleSwitched = { this.sortToggleSwitched } sortBy = { this.state.sortBy }/>
 					{ (this.state.loading) ? (
 						<Spinner />
 					) : (
@@ -71,15 +88,13 @@ class Search extends Component {
 							{this.state.pros.length > 0 ? (
 								<div>
 									<ProList pros = { this.state.pros } />
-									<Pagination />
+									<Pagination page = { this.state.page } noNext = {this.state.pros.length  < consts.PAGE_SIZE } pageChange = { this.pageChange }/>
 								</div>
 							) : (
 								<div className="empty">Sorry, no pros found for <span>{this.props.searchTerm}</span></div>
 							)}
 						</div>
 					)}
-
-
 
 				</div>
 			</div>

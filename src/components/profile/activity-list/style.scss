@@ -28,17 +28,17 @@
 
 }
 .header {
-	display: flex;
+
 	font-weight: bold;
 	> div {
-		flex-grow: 1;
+		display: inline-block;
 		width: 15%;
 	}
 	.type {
 		width: 8%;
 	}
 	.contact {
-		width: 55%;
+		width: 35%;
 	}
 	.date {
 		width: 20%;
