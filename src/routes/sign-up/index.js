@@ -5,21 +5,45 @@ import { connect } from 'preact-redux';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import style from './style.scss';
 import { register } from '../../actions/user';
-
+import Prismic from 'prismic-javascript';
+import PrismicReact from 'prismic-reactjs';
 import { route } from 'preact-router';
 import Redirect from '../../components/global/redirect';
 
 class SignUp extends Component {
 	constructor(props){
 		super(props);
+		this.state = {
+			regData: null
+		}
 	}
 	componentDidMount(){
-
+		this.fetchPage(this.props);
 	}
-	componentWillReceiveProps(nextProps) {
-
+	fetchPage(props) {
+    if (props.prismicCtx) {
+      // We are using the function to get a document by its uid
+      return props.prismicCtx.api.getByID(props.uid).then((doc, err) => {
+        if (doc) {
+          // We put the retrieved content in the state as a doc variable
+          this.setState({ regData: doc.data });
+        } else {
+          // We changed the state to display error not found if no matched doc
+          this.setState({ notFound: !doc });
+        }
+      });
+			/*
+			return props.prismicCtx.api.query('').then(function(response) {
+			   console.log(response);
+			});*/
+    }
+    return null;
+  }
+	componentWillReceiveProps(nextProps){
+		this.fetchPage(nextProps);
 	}
 	render() {
+
 		if (!this.state.loggedIn) {
 			return (
 				<div className="uk-container uk-container-small" id="signUp" >
@@ -29,7 +53,7 @@ class SignUp extends Component {
 							) : (
 								<h1>Success!</h1>
 							) }
-							<SignUpForm register = { this.props.register } registerSuccess = { this.props.registerSuccess } registerFailure = { this.props.registerFailure }/>
+							<SignUpForm register = { this.props.register } registerSuccess = { this.props.registerSuccess } registerFailure = { this.props.registerFailure } regData = { this.state.regData }/>
 						</div>
 				</div>
 

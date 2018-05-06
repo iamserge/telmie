@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router';
+import * as router from 'preact-router';
 import style from './style.scss';
 import Search from '../search';
 import { connect } from 'preact-redux';
@@ -45,6 +46,13 @@ class Header extends Component {
 
   }
 	componentDidMount(){
+    let that = this;
+    router.subscribers.push(()=>{
+      that.setState({
+        mobileMenuOpened: false
+      })
+    });
+
 		let userAuth = getCookie('USER_AUTH');
 		if (userAuth != null) {
 			this.props.logIn(userAuth)
@@ -104,7 +112,7 @@ class Header extends Component {
 								)}
 
 							</div>
-							<div className={style.dropdown + ' uk-dropdown mobile-hide'}>
+							<div className={style.dropdown + ' uk-dropdown'}>
 							    <ul className="uk-nav uk-dropdown-nav">
 							        <li><Link href="/profile">My Account</Link></li>
 											<li><Link href="/my-pros">My Pros</Link></li>

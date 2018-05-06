@@ -82,7 +82,7 @@ export default class App extends Component {
 					<Activity path={routes.MY_PROS} isProCalls = { false } />
 					<Activity path={routes.MY_CLIENTS} isProCalls = { true } />
 					<Shortlist path={routes.MY_SHORTLIST} />
-					
+
 					<AllTransactions path={routes.TRANSACTIONS} />
 					<Home path={routes.HOME} prismicCtx = { this.state.prismicCtx } uid = { uids.HOMEPAGE } />
 					<AboutUs path = { routes.ABOUT_US } prismicCtx = { this.state.prismicCtx } uid = { uids.ABOUT_US }/>
@@ -93,7 +93,7 @@ export default class App extends Component {
 
 
 					<LogIn path = { routes.LOG_IN } />
-					<SignUp path = { routes.SIGN_UP } />
+					<SignUp path = { routes.SIGN_UP } prismicCtx = { this.state.prismicCtx } uid = { uids.REGISTRATION }/>
 					<Profile path = { routes.PROFILE } />
 					<EditProfile path = { routes.EDIT_PROFILE } />
 				</Router>

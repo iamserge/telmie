@@ -6,10 +6,10 @@ import Switch from 'react-toggle-switch'
 import FontAwesome from 'react-fontawesome';
 import Select from 'react-select';
 import SimpleReactValidator from 'simple-react-validator';
-
+import { generateProfessionsArray } from '../../../utils';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
-const Services = [
+let Services = [
 	{
 		name: "Education",
 		categories: ["Language tutor", "Language practice", "Exams preparation", "Science", "Business studies", "Social science", "Drawing", "Music", "Dance"]
@@ -39,7 +39,7 @@ export default class SignUpForm extends Component {
 			professionDescription: '',
 			sectorCategory: '',
 			sector: '',
-			rate: '0.10',
+			rate: '0.00',
 			sectorCategories: [],
 			pro: false,
 			loading: false,
@@ -107,6 +107,11 @@ export default class SignUpForm extends Component {
 	}
 
 	render({}) {
+
+		let maxRate = (this.props.regData && this.props.regData.max_rate)  ? this.props.regData.max_rate : 10,
+				step = (this.props.regData && this.props.regData.rate_slider_step)  ? this.props.regData.rate_slider_step : 0.1;
+
+		if (this.props.regData && this.props.regData.registration_profession_options) Services = generateProfessionsArray(this.props.regData.registration_profession_options);
 
 		if (!this.state.loading) {
 			if (!this.props.registerSuccess) {
@@ -199,16 +204,24 @@ export default class SignUpForm extends Component {
 										<div className="input-container" id={style.rateContainer}>
 											<label for="rate">Rate</label>
 											<Slider
-							          min={0.1}
-							          max={20}
-							          step={0.1}
+							          min={0}
+							          max={maxRate}
+							          step={step}
 							          value={this.state.rate}
 							          onChange={this.onSliderChange}
 							        />
-											<div className={style.rate}>
-												<span>£{this.state.rate} </span>
-												per minute
-											</div>
+
+												{this.state.rate == "0.00" ? (
+													<div className={style.rate}>
+														<span className={style.free}>Free</span>
+													</div>
+												): (
+													<div className={style.rate}>
+														<span>£{this.state.rate} </span>
+														per minute
+													</div>
+												)}
+
 										</div>
 									</div>
 								)}
@@ -227,7 +240,6 @@ export default class SignUpForm extends Component {
 						<div className={style.success}>
 							<h3>Thank you for Telmie registration!</h3>
 							<p>Check your e-mail and click a link in Telmie letter to verify your account. After verification you'll be free to use Telmie App and web-page.</p>
-
 						</div>
 					</div>
 				)

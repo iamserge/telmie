@@ -26,3 +26,17 @@ export function processActivities(activities){
   withoutShortlist = without(withoutShortlist, undefined);
   return withoutShortlist;
 }
+
+
+export function generateProfessionsArray(professions){
+  let Services = [];
+
+  professions.forEach((profession)=>{
+      let Service = {
+        name: profession.professions[0].text,
+        categories: profession.professions[1].text.split(',')
+      }
+      Services.push(Service);
+  })
+  return Services;
+}

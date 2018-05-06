@@ -15,7 +15,6 @@ export default class ActivityList extends Component {
 				</h2>
 				<div className={style.inner}>
 					<div className={style.header}>
-						<div className={style.type}>Type</div>
 						<div className={style.contact}>Contact</div>
 						<div className={style.date}>Date</div>
 						<div>Duration</div>

@@ -11,7 +11,7 @@ export default class Minutes extends Component {
 		return (
 			<div className={style.minutes}>
 				<div>
-						<span>2545</span> minutes served
+						<span>{this.props.minutes}</span> minutes served
 				</div>
 			</div>
 		)

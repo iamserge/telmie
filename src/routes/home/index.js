@@ -65,7 +65,7 @@ class HomePage extends Component {
 								main_sub-title = { pageData["main_sub-title"][0].text }
 								/>
 						) }
-						<Minutes />
+						<Minutes minutes = {pageData.minutes} />
 						<FeaturedPros pros = { pageData.featured_pros } />
 						<FeaturedServices services = { pageData.featured_services } />
 						<Video videoId = { pageData.main_video.video_id } />

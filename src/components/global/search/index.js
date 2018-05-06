@@ -142,11 +142,13 @@ export default class Header extends Component {
 		this.state = {
 			showModal: false,
 			searchValue: '',
-			searchSuggestions: []
+			searchSuggestions: [],
+      expanded: false
 		}
 		this.closeModal = this.closeModal.bind(this);
     this.performSearch = this.performSearch.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.onFocus = this.onFocus.bind(this);
 	}
 	animateIn (modal, dialog) {
     this.setState({showModal: true});
@@ -164,18 +166,18 @@ export default class Header extends Component {
   };
   componentWillReceiveProps(nextProps){
     if (nextProps.hiddenSearchBox) {
-      this.setState({showModal: false})
+      this.setState({showModal: false, expanded: false})
     }
   }
   animateOut (modal, dialog) {
-    this.setState({showModal: false});
+    this.setState({showModal: false, expanded: false});
 		$(modal).remove();
     //velocity(modal,  {scale: 0.3}, { display: 'none' }, 20);
 		//velocity(dialog, {scale: 0.95},{display: 'none'}, 20);
   }
 
 	closeModal(){
-		this.setState({showModal: false})
+		this.setState({showModal: false, expanded: false})
 	}
 
   onSuggestionsFetchRequested = ({ value }) => {
@@ -200,29 +202,44 @@ export default class Header extends Component {
   }
   performSearch(e){
     e.stopPropagation();
-    this.closeModal();
-    route('/search/' + this.state.searchValue);
+    if (!this.state.expanded) {
+      this.setState({
+        expanded: true,
+        showModal: true
+      })
+    } else {
+      this.closeModal();
+      route('/search/' + this.state.searchValue);
+    }
 
+  }
+
+  onFocus(){
+    this.setState({
+      expanded: true,
+      showModal: true
+    })
   }
 
 	render() {
 		const inputProps = {
-      placeholder: 'e.g. Architect',
+      placeholder: 'Find pro',
       value: this.state.searchValue,
 			className: 'uk-search-input',
       onChange: this.onSearchChange,
       onKeyPress: this.handleKeyPress,
-			id: 'searchInput'
+			id: 'searchInput',
+      onFocus: this.onFocus
     };
 		return (
-			<div id={style.searchContainer} className=''>
+			<div id={style.searchContainer} className={!this.state.expanded && style.collapsed}>
 				{this.state.showModal && (<a onClick={this.closeModal} className="uk-modal-close uk-close" id="closeModal"></a>)}
 				<Modal
 					id={style.searchModal}
 		      close
 		      show={this.state.showModal}
-					className={this.state.showModal ? style.visible + ' uk-modal-full' : 'uk-modal-full'}
-		      trigger={{
+					className={style.visible + ' uk-modal-full'}
+          trigger={{
 		        body: 'Find pro',
 						animate: {
           		'in': (modal, dialog) => this.animateIn(modal, dialog),

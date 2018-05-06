@@ -120,3 +120,21 @@
 	}
 
 }
+
+@media (max-width: 880px) {
+	.activity {
+
+		> div {
+			vertical-align: top;
+		}
+
+		.contact {
+			width: 29%;
+			text-align: center;
+
+		}
+		.date {
+
+		}
+	}
+}

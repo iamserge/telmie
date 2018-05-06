@@ -31,3 +31,12 @@
 		}
 	}
 }
+@media (max-width: 880px) {
+	.details {
+		.inner {
+			> div {
+				width: 100%;				
+			}
+		}
+	}
+}
